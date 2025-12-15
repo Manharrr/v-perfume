@@ -1,0 +1,265 @@
+{
+  "users": [
+    {
+      "id": "8fc4",
+      "username": "manhar",
+      "email": "manhar@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "2136",
+      "username": "qwsd",
+      "email": "a@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "1126",
+      "username": "manh",
+      "email": "manhar@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "0417",
+      "username": "manhar",
+      "email": "manhar@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "a771",
+      "username": "manhar",
+      "email": "manahr@gmail.com",
+      "password": "1234567"
+    },
+    {
+      "id": "1a96",
+      "username": "hanan",
+      "email": "hanan@gmail.com",
+      "password": "1234567"
+    },
+    {
+      "id": "1765783581502",
+      "username": "manu",
+      "email": "manu@gmail.com",
+      "password": "123456",
+      "createdAt": "2025-12-15T07:26:21.502Z"
+    },
+    {
+      "id": 1765805215921,
+      "username": "loyd",
+      "email": "loyd@gmail.com",
+      "password": "123456",
+      "createdAt": "2025-12-15T13:26:55.921Z"
+    },
+    {
+      "id": 1765808458007,
+      "username": "bot",
+      "email": "bot@gmail.com",
+      "password": "123456",
+      "createdAt": "2025-12-15T14:20:58.007Z"
+    }
+  ],
+  "products": [
+    {
+      "id": "2",
+      "name": "Daily Luxury Essence",
+      "brand": "Everyday Wear",
+      "price": 1599,
+      "image": "/img/✨ Perfumes que Transformam seu Dia! ✨.jpg",
+      "description": "A refreshing everyday perfume that elevates your mood instantly."
+    },
+    {
+      "id": "3",
+      "name": "Valentino Born in Roma",
+      "brand": "Valentino",
+      "price": 3499,
+      "image": "/img/ai photo of Valentino born in roma.jpg",
+      "description": "A modern couture fragrance blending elegance and bold masculinity."
+    },
+    {
+      "id": "4",
+      "name": "CR7 Signature",
+      "brand": "Cristiano Ronaldo",
+      "price": 2799,
+      "image": "/img/CR7 Perfume photo shoot.jpg",
+      "description": "A powerful and confident fragrance inspired by champions."
+    },
+    {
+      "id": "5",
+      "name": "Minimal Oud Essence",
+      "brand": "Modern Oud",
+      "price": 2299,
+      "image": "/img/download (4).jpg",
+      "description": "A clean and minimal oud fragrance with long-lasting appeal."
+    },
+    {
+      "id": "6",
+      "name": "Elegant Amber Mist",
+      "brand": "Luxury Series",
+      "price": 2499,
+      "image": "/img/download (5).jpg",
+      "description": "Warm amber notes blended with soft spices."
+    },
+    {
+      "id": "7",
+      "name": "Midnight Noir",
+      "brand": "Elite",
+      "price": 2699,
+      "image": "/img/download (6).jpg",
+      "description": "A dark, mysterious fragrance crafted for night wear."
+    },
+    {
+      "id": "8",
+      "name": "Royal Oud Classic",
+      "brand": "Heritage",
+      "price": 2999,
+      "image": "/img/download (7).jpg",
+      "description": "Classic oud scent with rich woody tones."
+    },
+    {
+      "id": "9",
+      "name": "Golden Musk",
+      "brand": "Luxury Blend",
+      "price": 2199,
+      "image": "/img/download (8).jpg",
+      "description": "Soft musk blended with golden floral notes."
+    },
+    {
+      "id": "10",
+      "name": "Fresh Citrus Bloom",
+      "brand": "Fresh Line",
+      "price": 1799,
+      "image": "/img/download (9).jpg",
+      "description": "A refreshing citrus fragrance for daily freshness."
+    },
+    {
+      "id": "11",
+      "name": "Velvet Oud Intense",
+      "brand": "Oud Series",
+      "price": 3299,
+      "image": "/img/download (10).jpg",
+      "description": "Deep and intense oud with velvety smoothness."
+    },
+    {
+      "id": "12",
+      "name": "Spice Wood Elixir",
+      "brand": "Spice Collection",
+      "price": 2599,
+      "image": "/img/download (11).jpg",
+      "description": "Warm spices blended with rich woods."
+    },
+    {
+      "id": "13",
+      "name": "Soft Floral Touch",
+      "brand": "Floral Collection",
+      "price": 1699,
+      "image": "/img/download (12).jpg",
+      "description": "Light floral fragrance with a gentle feminine touch."
+    },
+    {
+      "id": "14",
+      "name": "Amber Nightfall",
+      "brand": "Signature",
+      "price": 2399,
+      "image": "/img/download (13).jpg",
+      "description": "Amber-rich fragrance perfect for evening wear."
+    },
+    {
+      "id": "15",
+      "name": "Classic Oud Reserve",
+      "brand": "Reserve",
+      "price": 3599,
+      "image": "/img/download (14).jpg",
+      "description": "Premium oud fragrance for true connoisseurs."
+    },
+    {
+      "id": "16",
+      "name": "Pure Musk Essence",
+      "brand": "Musk Series",
+      "price": 1899,
+      "image": "/img/download (15).jpg",
+      "description": "Clean and calming musk fragrance."
+    },
+    {
+      "id": "17",
+      "name": "Woody Fresh Blend",
+      "brand": "Nature",
+      "price": 2099,
+      "image": "/img/download (16).jpg",
+      "description": "Woody notes balanced with fresh undertones."
+    },
+    {
+      "id": "18",
+      "name": "AI Product Essence",
+      "brand": "AI Collection",
+      "price": 1999,
+      "image": "/img/Foto Producto con IA.jpg",
+      "description": "A modern fragrance inspired by artificial intelligence aesthetics."
+    },
+    {
+      "id": "19",
+      "name": "Kayan Refined Strength",
+      "brand": "Kayan",
+      "price": 3199,
+      "image": "/img/KAYAN – The Essence of Refined Strength 🌺🔥.jpg",
+      "description": "A powerful blend of floral warmth and woody strength."
+    },
+    {
+      "id": "20",
+      "name": "Luxury Oud Timeless",
+      "brand": "Elite Oud",
+      "price": 3999,
+      "image": "/img/Luxury Oud Perfume Bottle – Timeless Elegance & Rich Aroma 🌌✨.jpg",
+      "description": "An intense oud fragrance crafted for timeless elegance."
+    },
+    {
+      "id": "21",
+      "name": "Rose Petal Elixir",
+      "brand": "Floral Luxury",
+      "price": 1899,
+      "image": "/img/Rose Petal Elixir phone wallpaper.jpg",
+      "description": "Romantic rose fragrance with soft sweetness."
+    },
+    {
+      "id": "22",
+      "name": "Tom Ford Ombre Leather",
+      "brand": "Tom Ford",
+      "price": 4599,
+      "image": "/img/Tom Ford Ombre Leather.jpg",
+      "description": "Bold leather fragrance with smoky depth."
+    },
+    {
+      "id": "23",
+      "name": "Valentino Classic",
+      "brand": "Valentino",
+      "price": 3399,
+      "image": "/img/Valentino.jpg",
+      "description": "A refined designer fragrance with modern elegance."
+    },
+    {
+      "id": "24",
+      "name": "Vintage Dark Oud",
+      "brand": "Vintage",
+      "price": 2499,
+      "image": "/img/Vintage dark luxury wallpaper.jpg",
+      "description": "Dark vintage fragrance with rich oud notes."
+    },
+    {
+      "id": "25",
+      "name": "Wildberries Signature Oud",
+      "brand": "WB Collection",
+      "price": 2299,
+      "image": "/img/wildberries визуал, озон фото, фото для wb, карточка товара.jpg",
+      "description": "Modern oud fragrance designed for long-lasting impact."
+    },
+    {
+      "id": "26",
+      "name": "Premium Product Shoot",
+      "brand": "Studio",
+      "price": 2199,
+      "image": "/img/Предметная съемка.jpg",
+      "description": "A clean and premium fragrance with studio elegance."
+    }
+  ],
+  "cart": [],
+  "wishlist": []
+}
