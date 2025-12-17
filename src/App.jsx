@@ -1,28 +1,27 @@
-import React from "react";
+
+  import React from "react";
 import Connect from "./Connect";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <div>
       <Connect />
-
-      <ToastContainer
-        position="top-left"
-        autoClose={1500}
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
+      <Toaster 
+        position="top-left
+        "
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: '#000',
+            color: '#fff',
+            borderRadius: '8px',
+            border: '1px solid #333',
+          },
+        }}
       />
     </div>
   );
 }
 
 export default App;
-
- 
-  

@@ -35,6 +35,10 @@ import Men from "./pages/mens";
 import Women from "./pages/women";
 import About from "./pages/about";
 import Exclusive from "./pages/exclusive";
+import ProductDetails from "./pages/productdetails";
+import Payment from "./pages/payment";
+// import OrderConfirmation from "./pages/orderconformation";
+
 
 
 export default function Connect() {
@@ -49,8 +53,12 @@ export default function Connect() {
 <Route path="men" element={<Men/>}/>
 <Route path="women" element={<Women/>}/>
 <Route path="about" element={<About/>}/>
+<Route path="product/:id" element={<ProductDetails/>}/>
 
 <Route path="exclusive" element={<Exclusive/>}/>
+<Route path="payment" element={<Payment/>}/>
+{/* <Route path="orderconformation" element={<OrderConfirmation/>}/> */}
+
    
     </Routes>
   );

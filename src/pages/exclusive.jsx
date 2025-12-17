@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
-import toast from "react-hot-toast";
+import { useCart } from "../context/cartcontext";
+import { useWishlist } from "../context/wishlistcontext";
+import toast from "react-hot-toast"; // Add this import
 
 function Exclusive() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  const { addToCart } = useCart();
+  const { toggleWishlist, isInWishlist } = useWishlist();
 
   useEffect(() => {
     fetchExclusiveProducts();
@@ -15,92 +21,117 @@ function Exclusive() {
 
   const fetchExclusiveProducts = async () => {
     try {
-      const response = await fetch('http://localhost:3000/products');
+      const response = await fetch("http://localhost:3000/products");
       const allProducts = await response.json();
-      
-      // Get last 8 products for exclusive (IDs 17-24 or whatever you have)
-      // If less than 24 products, take from the end
       const exclusiveProducts = allProducts.slice(-8);
-      
       setProducts(exclusiveProducts);
     } catch (error) {
-      console.error("Error:", error);
+      console.error(error);
     } finally {
       setLoading(false);
     }
   };
 
-  const addToCart = (product) => {
-    const user = localStorage.getItem('user');
+  const handleAddToCart = async (product, e) => {
+    e.stopPropagation();
+    const user = localStorage.getItem("user");
     if (!user) {
-      toast.error("Please login to add to cart");
+      toast.error("Please login to add to cart"); // Changed from alert
       navigate("/login");
       return;
     }
-
-    const cart = JSON.parse(localStorage.getItem('cart') || "[]");
-    const existing = cart.find(item => item.id === product.id);
     
-    let updatedCart;
-    if (existing) {
-      updatedCart = cart.map(item =>
-        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-      );
-      toast.success("Added more to cart");
-    } else {
-      updatedCart = [...cart, { ...product, quantity: 1 }];
-      toast.success("Added to cart!");
+    const success = await addToCart(product);
+    if (success) {
+      toast.success(`Added ${product.name} to cart`); // Add success toast
     }
-    
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
   };
 
-  const buyNow = (product) => {
-    addToCart(product);
-    navigate("/cart");
+  const handleToggleWishlist = async (product, e) => {
+    e.stopPropagation();
+    const user = localStorage.getItem("user");
+    if (!user) {
+      toast.error("Please login to manage wishlist"); // Changed from alert
+      navigate("/login");
+      return;
+    }
+    
+    await toggleWishlist(product);
+    // Toast is already handled in the context
+  };
+
+  const handleBuyNow = async (product, e) => {
+    e.stopPropagation();
+    const user = localStorage.getItem("user");
+    if (!user) {
+      toast.error("Please login to buy"); // Changed from alert
+      navigate("/login");
+      return;
+    }
+    
+    const success = await addToCart(product);
+    if (success) {
+      toast.success(`Added ${product.name} to cart`); // Add success toast
+      navigate("/payment");
+    }
   };
 
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      
       <div className="max-w-7xl mx-auto px-4 py-8 flex-grow">
-        <div className="text-center mb-8">
+        <div className="text-center mb-10">
           <h1 className="text-3xl font-bold mb-2">Exclusive Collection</h1>
           <p className="text-gray-600">Limited edition premium fragrances</p>
         </div>
-        
+
         {loading ? (
           <div className="text-center py-12">Loading...</div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {products.map((product) => (
-              <div key={product.id} className="border border-gray-300 rounded-lg overflow-hidden hover:shadow-xl transition relative">
-                <div className="absolute top-2 left-2 bg-red-600 text-white text-xs px-2 py-1 rounded">
+              <div
+                key={product.id}
+                onClick={() => navigate(`/product/${product.id}`)}
+                className="bg-white rounded-xl border border-gray-200 hover:shadow-xl transition relative cursor-pointer"
+              >
+                <span className="absolute top-3 left-3 bg-red-600 text-white text-xs px-3 py-1 rounded-full">
                   EXCLUSIVE
-                </div>
+                </span>
+
+                <button
+                  onClick={(e) => handleToggleWishlist(product, e)}
+                  className="absolute top-3 right-3 bg-white p-2 rounded-full shadow"
+                >
+                  {isInWishlist(product.id) ? (
+                    <FaHeart className="text-red-500 w-5 h-5" />
+                  ) : (
+                    <FaRegHeart className="text-gray-500 w-5 h-5" />
+                  )}
+                </button>
+
                 <div className="h-48 bg-gray-100">
-                  <img 
-                    src={product.image} 
+                  <img
+                    src={product.image}
                     alt={product.name}
                     className="w-full h-full object-cover"
                   />
                 </div>
+
                 <div className="p-4">
-                  <h3 className="font-bold">{product.name}</h3>
-                  <p className="text-gray-600 text-sm">{product.brand}</p>
-                  <p className="font-bold mt-2 text-lg">₹{product.price}</p>
-                  
-                  <div className="flex gap-2 mt-4">
-                    <button 
-                      onClick={() => addToCart(product)}
+                  <h3 className="font-bold text-lg mb-1">{product.name}</h3>
+                  <p className="text-gray-600 text-sm mb-3">{product.brand}</p>
+                  <p className="font-bold text-xl mb-4">₹{product.price}</p>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={(e) => handleAddToCart(product, e)}
                       className="flex-1 bg-black text-white py-2 rounded hover:bg-gray-800"
                     >
                       Add to Cart
                     </button>
-                    <button 
-                      onClick={() => buyNow(product)}
-                      className="flex-1 border border-black text-black py-2 rounded hover:bg-gray-100"
+                    <button
+                      onClick={(e) => handleBuyNow(product, e)}
+                      className="flex-1 border border-black py-2 rounded hover:bg-gray-100"
                     >
                       Buy Now
                     </button>
@@ -110,12 +141,7 @@ function Exclusive() {
             ))}
           </div>
         )}
-        
-        <div className="mt-12 text-center">
-          <p className="text-gray-600 mb-4">Limited stock available. Order now!</p>
-        </div>
       </div>
-      
       <Footer />
     </div>
   );

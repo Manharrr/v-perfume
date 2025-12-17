@@ -1,16 +1,4 @@
-// import React from 'react'
 
-// function Login() {
-//   return (
-//     <div>
-//       <h1>this is login pagggggg</h1>
-
-
-//     </div>
-//   )
-// }
-
-// export default Login
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
@@ -104,9 +92,9 @@ function Login() {
         {/* Form Card */}
         <div className="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
           <div className="p-8">
-            <h2 className="text-2xl font-bold text-center mb-6 text-black">
+            {/* <h2 className="text-2xl font-bold text-center mb-6 text-black">
               Welcome Back
-            </h2>
+            </h2> */}
 
             <form onSubmit={handleLogin} className="space-y-4">
               <div>
@@ -139,24 +127,7 @@ function Login() {
                 />
               </div>
 
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id="remember"
-                    className="h-4 w-4 text-black focus:ring-black border-gray-300 rounded"
-                  />
-                  <label htmlFor="remember" className="ml-2 text-sm text-gray-600">
-                    Remember me
-                  </label>
-                </div>
-                <button
-                  type="button"
-                  className="text-sm text-gray-600 hover:text-black transition-colors"
-                >
-                  Forgot password?
-                </button>
-              </div>
+             
 
               <button
                 type="submit"
@@ -173,7 +144,7 @@ function Login() {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
                     </svg>
-                    Signing In...
+                    Signing In
                   </span>
                 ) : (
                   'Sign In'
@@ -195,19 +166,9 @@ function Login() {
           </div>
 
           {/* Footer */}
-          <div className="bg-gray-50 px-8 py-4 border-t border-gray-200">
-            <p className="text-xs text-gray-500 text-center">
-              By signing in, you agree to our Terms of Service and Privacy Policy
-            </p>
-          </div>
+         
         </div>
 
-        {/* Demo Credentials */}
-        <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
-          <p className="text-sm text-gray-600 mb-2 font-medium">Demo Credentials:</p>
-          <p className="text-xs text-gray-500">Email: user@example.com</p>
-          <p className="text-xs text-gray-500">Password: password123</p>
-        </div>
 
         {/* Back to Home */}
         <div className="text-center mt-6">
@@ -217,6 +178,7 @@ function Login() {
           >
             ← Back to Home
           </button>
+        
         </div>
       </div>
     </div>
@@ -224,221 +186,3 @@ function Login() {
 }
 
 export default Login;
-
-// import React, { useState } from "react";
-// import axios from "axios";
-// import { useNavigate } from "react-router-dom";
-// import toast from "react-hot-toast";
-
-// function Login() {
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-
-//   const navigate = useNavigate();
-
-//   async function handleLogin(e) {
-//     e.preventDefault();
-
-//     if (!email || !password) {
-//       toast.error("All fields are required");
-//       return;
-//     }
-
-//     try {
-//       const res = await axios.get("http://localhost:3000/users");
-//       const user = res.data.find(
-//         (u) => u.email === email && u.password === password
-//       );
-
-//       if (!user) {
-//         toast.error("Invalid email or password");
-//         return;
-//       }
-
-//       toast.success("Login successful");
-//       navigate("/");
-//     } catch (err) {
-//       toast.error("Login failed");
-//     }
-//   }
-
-//   return (
-//     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-//       <form
-//         onSubmit={handleLogin}
-//         className="bg-white p-8 rounded-xl shadow-md w-96"
-//       >
-//         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
-
-//         <input
-//           type="email"
-//           placeholder="Email"
-//           className="w-full p-2 border rounded mb-4"
-//           value={email}
-//           onChange={(e) => setEmail(e.target.value)}
-//         />
-
-//         <input
-//           type="password"
-//           placeholder="Password"
-//           className="w-full p-2 border rounded mb-6"
-//           value={password}
-//           onChange={(e) => setPassword(e.target.value)}
-//         />
-
-//         <button className="w-full bg-black text-white py-2 rounded">
-//           Login
-//         </button>
-//       </form>
-//     </div>
-//   );
-// }
-
-// export default Login;
-
-
-
-
-// import React, { useState } from "react";
-// import axios from "axios";
-// import { useNavigate } from "react-router-dom";
-// import toast from "react-hot-toast";
-
-// // import Login from "./pages/Login";
-
-
-// function Login() {
-//   const [email, setEmail]       = useState("");
-//   const [password, setPassword] = useState("");
-
-//   const navigate = useNavigate();
-
-//   async function handleLogin(e) {
-//     e.preventDefault();
-
-//     if (!email.trim() || !password.trim()) {
-//       toast.error("All fields are required");
-//       return;
-//     }
-
-//     try {
-//       const res = await axios.get("http://localhost:3000/users");
-//       const users = res.data;
-
-//       // Check if email exists
-//       const userFound = users.find(
-//         (u) => u.email === email && u.password === password
-//       );
-
-//       if (!userFound) {
-//         toast.error("Invalid email or password");
-//         return;
-//       }
-
-//       toast.success("Login Successful!");
-//       setTimeout(() => navigate("/home"), 1000);
-
-//     } catch (err) {
-//       toast.error("Error logging in");
-//     }
-//   }
-
-//   return (
-//     <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-gray-100 to-gray-200">
-//       <form
-//         onSubmit={handleLogin}
-//         className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-gray-200"
-//       >
-//         <h2 className="text-3xl font-bold text-center mb-6 bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">
-//           Welcome Back
-//         </h2>
-
-//         <input
-//           type="email"
-//           placeholder="Gmail Address"
-//           className="w-full p-3 border border-gray-300 rounded-lg mb-4 focus:ring-2 focus:ring-blue-400 outline-none transition"
-//           value={email}
-//           onChange={(e) => setEmail(e.target.value)}
-//         />
-
-//         <input
-//           type="password"
-//           placeholder="Password"
-//           className="w-full p-3 border border-gray-300 rounded-lg mb-6 focus:ring-2 focus:ring-blue-400 outline-none transition"
-//           value={password}
-//           onChange={(e) => setPassword(e.target.value)}
-//         />
-
-//         <button
-//           type="submit"
-//           className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-xl font-semibold hover:opacity-90 transition-all shadow-md"
-//         >
-//           Login
-//         </button>
-
-//         <p className="text-center mt-4 text-gray-600">
-//           Don't have an account?{" "}
-//           <span
-//             className="text-blue-600 font-medium cursor-pointer hover:underline"
-//             onClick={() => navigate("/home")}
-//           >
-//             Register
-//           </span>
-//         </p>
-//       </form>
-//     </div>
-//   );
-// }
-
-// export default Login;
-
-
-// import React, { useEffect, useState } from "react";
-// import api from "../api/axiosInstance"; // or axios
-// import toast from "react-hot-toast";
-// import { useNavigate } from "react-router-dom";
-// import { useAuth } from "../context/auth";
-
-
-// export default function Login() {
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const navigate = useNavigate();
-//   const { user, login } = useAuth();
-
-//   // if already logged in, go to /home
-//   useEffect(() => {
-//     if (user) navigate("/home", { replace: true });
-//   }, [user, navigate]);
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     if (!email || !password) return toast.error("Enter email and password");
-
-//     try {
-//       const res = await api.get("/users", { params: { email, password } });
-//       if (res.data && res.data.length > 0) {
-//         const found = res.data[0];
-//         login(found);              // update context + localStorage via AuthProvider
-//         toast.success("Login successful");
-//         navigate("/home", { replace: true });
-//       } else {
-//         toast.error("Invalid credentials");
-//       }
-//     } catch (err) {
-//       toast.error("Login failed");
-//       console.error(err);
-//     }
-//   };
-
-//   return (
-//     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-//       <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-//         <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
-//         <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" className="w-full p-3 border rounded mb-3" />
-//         <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" type="password" className="w-full p-3 border rounded mb-4" />
-//         <button type="submit" className="w-full bg-blue-600 text-white p-3 rounded">Login</button>
-//       </form>
-//     </div>
-//   );
-// }

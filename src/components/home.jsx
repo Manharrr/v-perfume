@@ -1,36 +1,11 @@
-// import React from "react";
-// import { useNavigate } from "react-router-dom";
-// import { useAuth } from "../context/auth";
 
-// export default function Home() {
-//   const { user, logout } = useAuth();
-//   const navigate = useNavigate();
 
-//   const handleLogout = () => {
-//     logout();
-//     navigate("/login", { replace: true });
-//   };
 
-//   return (
-//     <div className="min-h-screen p-8 bg-gray-50">
-//       <div className="max-w-4xl mx-auto">
-//         <div className="flex items-center justify-between mb-8">
-//           <h1 className="text-2xl font-bold">Welcome, {user?.username || user?.email}</h1>
-//           <button onClick={handleLogout} className="bg-red-500 text-white px-3 py-1 rounded">Logout</button>
-//         </div>
-
-//         {/* rest of home content */}
-//         <p>Your perfume shop home page here ✨</p>
-//       </div>
-//     </div>
-//   );
-// }
-// src/components/home.jsx
 import React, { useEffect, useState } from "react";
 import {api} from "../Api/Axios";
 import Navbar from "./navbar";
 import Footer from "./footer";
-// import { useAuth } from "../context/auth";
+import { useAuth } from "../context/auth";
 import toast from "react-hot-toast";
 
 export default function Home() {
