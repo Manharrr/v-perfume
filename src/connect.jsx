@@ -1,30 +1,7 @@
-// import { Navigate, Route, Routes } from 'react-router-dom'
-// import React from 'react'
-
-// import Homeconnect from './components/HomeConnect'
-// import Products from './pages/product'
-// import Login from './pages/login'
-// import Cart from './pages/Cart'
-// import Wishlist from './pages/Wishlist'
 
 
-// const connect = () => {
-//   return (
-//     <div>
-//       <Routes>
-//         <Route path='/' element={<Homeconnect/>}/>
-//         <Route path='product' element={<Products/>}/>
-//         <Route path='login' element={<Login/>}/>
-//         <Route path='cart' element={<Cart/>}/>
-//        <Route path=' Wishlist' element={< Wishlist/>}/>
-//       </Routes>
-//     </div>
-//   )
-// }
 
-// export default connect
-
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import HomeConnect from "./components/HomeConnect";
 import Products from "./pages/product";
 import Login from "./pages/login";
@@ -37,7 +14,8 @@ import About from "./pages/about";
 import Exclusive from "./pages/exclusive";
 import ProductDetails from "./pages/productdetails";
 import Payment from "./pages/payment";
-// import OrderConfirmation from "./pages/orderconformation";
+import NotFound from "./pages/notfound";
+
 
 
 
@@ -57,49 +35,12 @@ export default function Connect() {
 
 <Route path="exclusive" element={<Exclusive/>}/>
 <Route path="payment" element={<Payment/>}/>
-{/* <Route path="orderconformation" element={<OrderConfirmation/>}/> */}
+<Route path="*" element={<NotFound/>}/>
+{/* <Route path="*" element={<Navigate to="/404"/>}/> */}
 
    
     </Routes>
   );
 }
-
-
-
-
-// import React from 'react'
-// import Login from './pages/login'
-// import Registration from './pages/registration'
-
-// import Home from './components/home'
-// function Connect() {
-//   return (
-//     <div> 
-      
-
-//       <Routes>
-//         <Route path='/' element={<Navigate to="/home" replace />} />
-//         <Route path='/register' element={<Registration />} />
-//         <Route path='/login' element={<Login/>}/>
-//       </Routes>
-
-// {/*             
-        
-//        <Route 
-//        path='/home'
-//        element={
-//        }<rotectedRoute>
-//        <Home/>
-
-
-//  */}
-
-
-
-//     </div>
-//   )
-// }
-
-// export default Connect
 
 

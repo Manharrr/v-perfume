@@ -8,7 +8,10 @@ import a2 from "../assets/cover/a2.jpg";
 import a3 from "../assets/cover/a3.jpg";
 import a4 from "../assets/cover/a4.jpg";
 
-const banners = [a3, a4, a2];
+
+import bannn from "../assets/cover/bannn.jpg"
+
+const banners = [a3, a4, a2,];
 const categories = [
   { name: "Men", path: "/men" },
   { name: "Women", path: "/women" },

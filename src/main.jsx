@@ -6,14 +6,14 @@ import { BrowserRouter } from 'react-router-dom'
 import { CartProvider } from './context/cartcontext.jsx'
 import { WishlistProvider } from './context/wishlistcontext.jsx'
 
-// import { AuthProvider } from './context/auth.jsx'
+import { AuthProvider } from './context/auth.jsx'
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
 
     <BrowserRouter>
-      {/* <AuthProvider> */}
+      <AuthProvider>
 
       <CartProvider>
         <WishlistProvider>
@@ -24,7 +24,7 @@ createRoot(document.getElementById('root')).render(
       </CartProvider>
 
 
-      {/* </AuthProvider> */}
+      </AuthProvider>
 
     </BrowserRouter>
   </StrictMode>,

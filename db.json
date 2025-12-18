@@ -7,24 +7,6 @@
       "password": "123456"
     },
     {
-      "id": "1126",
-      "username": "manh",
-      "email": "manhar@gmail.com",
-      "password": "123456"
-    },
-    {
-      "id": "0417",
-      "username": "manhar",
-      "email": "manhar@gmail.com",
-      "password": "123456"
-    },
-    {
-      "id": "a771",
-      "username": "manhar",
-      "email": "manahr@gmail.com",
-      "password": "1234567"
-    },
-    {
       "id": "1a96",
       "username": "hanan",
       "email": "hanan@gmail.com",
@@ -50,6 +32,13 @@
       "email": "bot@gmail.com",
       "password": "123456",
       "createdAt": "2025-12-15T14:20:58.007Z"
+    },
+    {
+      "id": 1765983941125,
+      "username": "abcdefg",
+      "email": "abc@gmail.com",
+      "password": "123456",
+      "createdAt": "2025-12-17T15:05:41.125Z"
     }
   ],
   "products": [
@@ -254,98 +243,6 @@
       "description": "A clean and premium fragrance with studio elegance."
     }
   ],
-  "cart": [
-    {
-      "id": "f068",
-      "userId": "1765783581502",
-      "productId": "2",
-      "name": "Daily Luxury Essence",
-      "price": 1599,
-      "image": "/img/✨ Perfumes que Transformam seu Dia! ✨.jpg",
-      "brand": "Everyday Wear",
-      "quantity": 5
-    },
-    {
-      "id": "f225",
-      "userId": "1765783581502",
-      "productId": "19",
-      "name": "Kayan Refined Strength",
-      "price": 3199,
-      "image": "/img/KAYAN – The Essence of Refined Strength 🌺🔥.jpg",
-      "brand": "Kayan",
-      "quantity": 1
-    },
-    {
-      "id": "36df",
-      "userId": "1765783581502",
-      "productId": "3",
-      "name": "Valentino Born in Roma",
-      "price": 3499,
-      "image": "/img/ai photo of Valentino born in roma.jpg",
-      "brand": "Valentino",
-      "quantity": 5
-    },
-    {
-      "id": "6f93",
-      "userId": "1765783581502",
-      "productId": "14",
-      "name": "Amber Nightfall",
-      "price": 2399,
-      "image": "/img/download (13).jpg",
-      "brand": "Signature",
-      "quantity": 1
-    },
-    {
-      "id": "f4ae",
-      "userId": "1765783581502",
-      "productId": "4",
-      "name": "CR7 Signature",
-      "price": 2799,
-      "image": "/img/CR7 Perfume photo shoot.jpg",
-      "brand": "Cristiano Ronaldo",
-      "quantity": 1
-    }
-  ],
-  "wishlist": [
-    {
-      "id": "0262",
-      "userId": "1765783581502",
-      "productId": "2",
-      "name": "Daily Luxury Essence",
-      "price": 1599,
-      "image": "/img/✨ Perfumes que Transformam seu Dia! ✨.jpg",
-      "brand": "Everyday Wear",
-      "addedAt": "2025-12-17T08:03:25.792Z"
-    },
-    {
-      "id": "47e2",
-      "userId": "1765783581502",
-      "productId": "3",
-      "name": "Valentino Born in Roma",
-      "price": 3499,
-      "image": "/img/ai photo of Valentino born in roma.jpg",
-      "brand": "Valentino",
-      "addedAt": "2025-12-17T08:03:37.406Z"
-    },
-    {
-      "id": "672f",
-      "userId": "1765783581502",
-      "productId": "24",
-      "name": "Vintage Dark Oud",
-      "price": 2499,
-      "image": "/img/Vintage dark luxury wallpaper.jpg",
-      "brand": "Vintage",
-      "addedAt": "2025-12-17T08:04:17.685Z"
-    },
-    {
-      "id": "aa98",
-      "userId": "1765783581502",
-      "productId": "25",
-      "name": "Wildberries Signature Oud",
-      "price": 2299,
-      "image": "/img/wildberries визуал, озон фото, фото для wb, карточка товара.jpg",
-      "brand": "WB Collection",
-      "addedAt": "2025-12-17T08:04:19.031Z"
-    }
-  ]
+  "cart": [],
+  "wishlist": []
 }

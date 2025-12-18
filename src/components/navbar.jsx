@@ -80,18 +80,18 @@ function Navbar() {
         >
           About Us
         </li>
-        <li 
+        {/* <li 
           className="hover:text-gray-300 cursor-pointer transition duration-300"
           onClick={() => navigate("/men")}
         >
           Men
-        </li>
-        <li 
+        </li> */}
+        {/* <li 
           className="hover:text-gray-300 cursor-pointer transition duration-300"
           onClick={() => navigate("/women")}
         >
           Women
-        </li>
+        </li> */}
       </ul>
 
       {/* Actions */}
