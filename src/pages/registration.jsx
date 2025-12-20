@@ -26,14 +26,14 @@ function Registration() {
     if (!formData.username.trim()) return "Username is required";
     if (formData.username.trim().length < 3) return "Username must be at least 3 characters";
     if (!formData.email.trim()) return "Email is required";
-    if (!formData.email.includes("@")) return "Please enter a valid email";
+    if (!formData.email.includes("@gmail.com")) return "Please enter a valid email";
     if (!formData.password) return "Password is required";
     if (formData.password.length < 6) return "Password must be at least 6 characters";
     if (!formData.confirmPassword) return "Confirm password is required";
     if (formData.password !== formData.confirmPassword) return "Passwords do not match";
     return null;
   };
-
+//email db undoo
   const checkExistingUser = async (email) => {
     try {
       const response = await axios.get("http://localhost:3000/users");
@@ -47,6 +47,7 @@ function Registration() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const error = validateForm();
     
     if (error) {
@@ -57,7 +58,7 @@ function Registration() {
     setLoading(true);
 
     try {
-      // Check if user already exists
+      //exist already
       const userExists = await checkExistingUser(formData.email);
       if (userExists) {
         toast.error("User with this email already exists");
@@ -65,16 +66,16 @@ function Registration() {
         return;
       }
 
-      // Create new user object
+   
       const newUser = {
-        id: Date.now(), // Generate unique ID
+        id: Date.now(), //  unique ID
         username: formData.username,
         email: formData.email,
         password: formData.password,
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString()//time
       };
 
-      // Save to JSON server
+      // Save to db
       const response = await axios.post("http://localhost:3000/users", newUser);
       
       if (response.status === 201) {
@@ -85,12 +86,13 @@ function Registration() {
           id: newUser.id,
           username: newUser.username,
           email: newUser.email
+         
         }));
         
         // Redirect to home after delay
         setTimeout(() => {
           navigate("/");
-        }, 1500);
+        }, 1000);
       }
     } catch (error) {
       console.error("Registration error:", error);
@@ -107,7 +109,7 @@ function Registration() {
         <div className="text-center mb-8">
           <h1 
             className="text-3xl md:text-4xl font-bold text-black cursor-pointer mb-2"
-            onClick={() => navigate("/")}
+            // onClick={() => navigate("/")}
           >
             V-PERFUMÉ
           </h1>
@@ -124,7 +126,7 @@ function Registration() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Username *
+                  Username 
                 </label>
                 <input
                   type="text"
@@ -139,7 +141,7 @@ function Registration() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Email *
+                  Email 
                 </label>
                 <input
                   type="email"
@@ -154,7 +156,7 @@ function Registration() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Password *
+                  Password 
                 </label>
                 <input
                   type="password"
@@ -169,7 +171,7 @@ function Registration() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Confirm Password *
+                  Confirm Password 
                 </label>
                 <input
                   type="password"

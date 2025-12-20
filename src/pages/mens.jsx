@@ -5,15 +5,17 @@ import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import { useCart } from "../context/cartcontext";
 import { useWishlist } from "../context/wishlistcontext";
-import toast from "react-hot-toast"; // Add this import
+import { useAuth } from "../context/auth";
+import toast from "react-hot-toast";
 
 function Men() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
   const { addToCart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
+  const { user } = useAuth(); // hook context
 
   useEffect(() => {
     fetchMenProducts();
@@ -23,12 +25,12 @@ function Men() {
     try {
       const res = await fetch("http://localhost:3000/products");
       const data = await res.json();
-      const mensProducts = data.filter(p => 
-        parseInt(p.id) >= 2 && parseInt(p.id) <= 12
+      const mensProducts = data.filter(
+         (p) => Number(p.id) >= 2 && Number(p.id) <= 12
       );
       setProducts(mensProducts);
     } catch (err) {
-      console.error(err);
+      toast.error("Failed to load products");
     } finally {
       setLoading(false);
     }
@@ -36,46 +38,42 @@ function Men() {
 
   const handleAddToCart = async (product, e) => {
     e.stopPropagation();
-    const user = localStorage.getItem("user");
+
     if (!user) {
-      toast.error("Please login to add to cart"); // Change alert to toast
+      toast.error("Please login to add to cart");
       navigate("/login");
       return;
     }
-    
-    const success = await addToCart(product);
-    if (success) {
-      toast.success(`Added ${product.name} to cart`);
-    }
+
+    await addToCart(product);
+         toast.success("Added to cart");
   };
 
-  const handleToggleWishlist = async (product, e) => {
+  const handleToggleWishlist = (product, e) => {
     e.stopPropagation();
-    const user = localStorage.getItem("user");
+
     if (!user) {
-      toast.error("Please login to manage wishlist"); // Change alert to toast
+      toast.error("Please login to manage wishlist");
       navigate("/login");
       return;
     }
-    
-    await toggleWishlist(product);
-    // Toast is already handled in the context
+
+    toggleWishlist(product);
   };
 
-  const handleBuyNow = async (product, e) => {
+  
+  const handleBuyNow = (product, e) => {
     e.stopPropagation();
-    const user = localStorage.getItem("user");
+
     if (!user) {
-      toast.error("Please login to buy"); // Change alert to toast
+      toast.error("Please login to buy");
       navigate("/login");
       return;
     }
-    
-    const success = await addToCart(product);
-    if (success) {
-      toast.success(`Added ${product.name} to cart`);
-      navigate("/payment");
-    }
+
+    navigate("/payment", {
+      state: { product },
+    });
   };
 
   return (
@@ -86,8 +84,8 @@ function Men() {
         <h1 className="text-3xl font-bold mb-2">Men's Collection</h1>
         <p className="text-gray-600 mb-8">
           Premium fragrances for the modern man
-        </p>
-
+        </p> 
+        
         {loading ? (
           <div className="text-center py-12">Loading...</div>
         ) : (
@@ -96,48 +94,41 @@ function Men() {
               <div
                 key={product.id}
                 onClick={() => navigate(`/product/${product.id}`)}
-                className="border border-gray-300 rounded-lg overflow-hidden hover:shadow-xl transition relative cursor-pointer"
+                className="border rounded-lg overflow-hidden cursor-pointer hover:shadow-xl relative"
               >
+                {/* Wishlist */}
                 <button
                   onClick={(e) => handleToggleWishlist(product, e)}
-                  className="absolute top-3 right-3 p-2 bg-white rounded-full shadow z-10"
+                  className="absolute top-3 right-3 bg-white p-2 rounded-full z-10"
                 >
                   {isInWishlist(product.id) ? (
-                    <FaHeart className="text-red-500 w-5 h-5" />
+                    <FaHeart className="text-red-500" />
                   ) : (
-                    <FaRegHeart className="text-gray-500 w-5 h-5" />
+                    <FaRegHeart />
                   )}
                 </button>
 
-                <div className="h-48 bg-gray-100">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="h-48 w-full object-cover"
+                />
 
                 <div className="p-4">
-                  <h3 className="font-bold text-lg mb-1">
-                    {product.name}
-                  </h3>
-                  <p className="text-gray-600 text-sm mb-3">
-                    {product.brand}
-                  </p>
-                  <p className="font-bold text-xl mb-4">
-                    ₹{product.price}
-                  </p>
+                  <h3 className="font-bold">{product.name}</h3>
+                  <p className="text-sm text-gray-600">{product.brand}</p>
+                  <p className="font-bold text-lg mt-2">₹{product.price}</p>
 
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 mt-4">
                     <button
                       onClick={(e) => handleAddToCart(product, e)}
-                      className="flex-1 bg-black text-white py-2 rounded hover:bg-gray-800"
+                      className="flex-1 bg-black text-white py-2 rounded"
                     >
                       Add to Cart
                     </button>
                     <button
                       onClick={(e) => handleBuyNow(product, e)}
-                      className="flex-1 border border-black py-2 rounded hover:bg-gray-100"
+                      className="flex-1 border py-2 rounded"
                     >
                       Buy Now
                     </button>

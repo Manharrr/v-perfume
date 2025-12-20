@@ -3,26 +3,36 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import { useCart } from "../context/cartcontext";
+import { useAuth } from "../context/auth";
+import toast from "react-hot-toast";
 
 function Cart() {
   const { cart, removeFromCart, updateQuantity } = useCart();
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   const handleQuantityChange = async (item, change) => {
     const newQty = Math.max(1, item.quantity + change);
+
     await updateQuantity(item.id, newQty);
   };
-
+  //price total
   const total = cart.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
+    (sum, item) => sum + item.price * item.quantity, 0);
 
   const handleCheckout = () => {
-    if (cart.length === 0) {
-      alert("Your cart is empty");
+    if (!user) {
+      toast.error("Please login to continue");
+      navigate("/login");
       return;
     }
+
+    if (cart.length === 0) {
+      toast.error("Your cart is empty");
+      return;
+    }
+
+
     navigate("/payment");
   };
 
@@ -55,30 +65,34 @@ function Cart() {
                     src={item.image}
                     alt={item.name}
                     className="w-24 h-24 md:w-32 md:h-32 object-cover rounded"
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = "https://via.placeholder.com/300x300?text=No+Image";
-                    }}
                   />
+
                   <div className="flex-grow">
                     <h3 className="font-bold text-lg">{item.name}</h3>
-                    <p className="text-gray-600">{item.brand || "Premium Brand"}</p>
-                    <p className="text-xl font-bold mt-2">₹{item.price}</p>
+                    <p className="text-gray-600">
+                      {item.brand || "Premium Brand"}
+                    </p>
+                    <p className="text-xl font-bold mt-2">
+                      ₹{item.price}
+                    </p>
 
                     <div className="flex items-center gap-4 mt-3">
-                      <button 
+                      <button
                         onClick={() => handleQuantityChange(item, -1)}
-                        className="w-8 h-8 flex items-center justify-center border rounded hover:bg-gray-100"
+                        className="w-8 h-8 border rounded"
                       >
                         -
                       </button>
+
                       <span className="font-bold">{item.quantity}</span>
-                      <button 
+
+                      <button
                         onClick={() => handleQuantityChange(item, 1)}
-                        className="w-8 h-8 flex items-center justify-center border rounded hover:bg-gray-100"
+                        className="w-8 h-8 border rounded"
                       >
                         +
                       </button>
+
                       <span className="text-gray-600">
                         Total: ₹{item.price * item.quantity}
                       </span>

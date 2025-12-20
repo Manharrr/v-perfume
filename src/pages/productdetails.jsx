@@ -3,209 +3,112 @@ import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import { useCart } from "../context/cartcontext";
+import { useAuth } from "../context/auth";
 import toast from "react-hot-toast";
 
 function ProductDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
+
   const { addToCart } = useCart();
+  const { user } = useAuth();
 
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchProductDetails();
+    fetchProduct();
   }, [id]);
 
-  const fetchProductDetails = async () => {
+  const fetchProduct = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:3000/products/${id}`);
-      if (!response.ok) throw new Error("Product not found");
-      const data = await response.json();
+      const res = await fetch(`http://localhost:3000/products/${id}`);
+      const data = await res.json();
       setProduct(data);
-    } catch (error) {
-      console.error(error);
-      toast.error("Failed to load product details");
+    } catch {
+      toast.error("Failed to load product");
     } finally {
       setLoading(false);
     }
   };
 
   const handleAddToCart = async () => {
-    const user = localStorage.getItem("user");
     if (!user) {
       toast.error("Please login to add to cart");
       navigate("/login");
       return;
     }
 
-    const success = await addToCart(product, quantity);
-    if (success) {
-      toast.success(`Added ${product.name} to cart (Quantity: ${quantity})`);
-    }
+    await addToCart(product, quantity);     
   };
 
-  const handleBuyNow = async () => {
-    const user = localStorage.getItem("user");
+  // buy
+  const handleBuyNow = () => {
     if (!user) {
       toast.error("Please login to buy");
       navigate("/login");
       return;
     }
 
-    const success = await addToCart(product, quantity);
-    if (success) {
-      toast.success(`Added ${product.name} to cart (Quantity: ${quantity})`);
-      navigate("/payment");
-    }
+    navigate("/payment", {
+      state: {
+        product,
+        quantity,
+      },
+    });
   };
 
-  const decreaseQuantity = () => {
-    if (quantity > 1) setQuantity(quantity - 1);
-  };
+  const decrease = () => quantity > 1 && setQuantity(quantity - 1);
+  const increase = () => setQuantity(quantity + 1);
 
-  const increaseQuantity = () => {
-    setQuantity(quantity + 1);
-  };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex flex-col">
-        <Navbar />
-        <div className="flex-grow flex items-center justify-center">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-400 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading product...</p>
-          </div>
-        </div>
-        <Footer />
-      </div>
-    );
-  }
-
-  if (!product) {
-    return (
-      <div className="min-h-screen flex flex-col">
-        <Navbar />
-        <div className="flex-grow flex flex-col items-center justify-center">
-          <h2 className="text-2xl font-bold mb-4">Product not found</h2>
-          <button
-            onClick={() => navigate("/product")}
-            className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800"
-          >
-            Back to Products
-          </button>
-        </div>
-        <Footer />
-      </div>
-    );
-  }
+  if (loading) return <p className="text-center mt-20">Loading...</p>;
+  if (!product) return <p className="text-center mt-20">Product not found</p>;
 
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
 
       <div className="max-w-6xl mx-auto px-4 py-8 flex-grow">
-        <button
-          onClick={() => navigate(-1)}
-          className="mb-6 text-gray-600 hover:text-black flex items-center gap-2"
-        >
-          ← Back
-        </button>
+        <button onClick={() => navigate(-1)} className="mb-6">← Back</button>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Image */}
-          <div className="bg-gray-100 rounded-2xl overflow-hidden">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-auto object-cover"
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = "https://via.placeholder.com/600x800?text=No+Image";
-              }}
-            />
-          </div>
+          <img src={product.image} alt={product.name} />
 
-          {/* Details */}
-          <div className="space-y-8">
-            <div>
-              <h1 className="text-4xl font-bold mb-2">{product.name}</h1>
-              <p className="text-gray-600 text-lg">{product.brand}</p>
-              <p className="text-3xl font-bold mt-6">₹{product.price}</p>
-              
-              {product.description && (
-                <div className="mt-6">
-                  <h3 className="font-bold mb-2">Description</h3>
-                  <p className="text-gray-700">{product.description}</p>
-                </div>
-              )}
+          <div>
+            <h1 className="text-4xl font-bold">{product.name}</h1>
+            <p className="text-gray-600">{product.brand}</p>
+            <p className="text-3xl font-bold mt-4">₹{product.price}</p>
+
+            {product.description && (
+              <p className="mt-4 text-gray-700">{product.description}</p>
+            )}
+
+            <div className="mt-6 flex items-center gap-4">
+              <button onClick={decrease}>-</button>
+              <span>{quantity}</span>
+              <button onClick={increase}>+</button>
+              <span className="font-bold">
+                Total: ₹{product.price * quantity}
+              </span>
             </div>
 
-            {/* Quantity */}
-            <div>
-              <h3 className="font-bold mb-4">Quantity</h3>
-              <div className="flex items-center gap-6">
-                <div className="flex items-center gap-4 border rounded-lg px-4 py-2">
-                  <button 
-                    onClick={decreaseQuantity}
-                    className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded"
-                  >
-                    -
-                  </button>
-                  <span className="font-bold text-lg w-8 text-center">{quantity}</span>
-                  <button 
-                    onClick={increaseQuantity}
-                    className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded"
-                  >
-                    +
-                  </button>
-                </div>
-                <span className="font-bold text-lg">
-                  Total: ₹{product.price * quantity}
-                </span>
-              </div>
-            </div>
-
-            {/* Buttons */}
-            <div className="flex gap-4">
+            <div className="flex gap-4 mt-8">
               <button
                 onClick={handleAddToCart}
-                className="flex-1 bg-black text-white py-4 rounded-lg font-bold hover:bg-gray-800"
+                className="bg-black text-white px-6 py-3 rounded"
               >
                 Add to Cart
               </button>
+
               <button
                 onClick={handleBuyNow}
-                className="flex-1 border-2 border-black text-black py-4 rounded-lg font-bold hover:bg-gray-50"
+                className="border border-black px-6 py-3 rounded"
               >
                 Buy Now
               </button>
             </div>
-
-            {/* Signup Prompt for Non-logged Users */}
-            {!localStorage.getItem("user") && (
-              <div className="mt-8 p-6 border border-gray-300 rounded-xl bg-gray-50">
-                <h3 className="text-xl font-bold mb-3">Want to Shop?</h3>
-                <p className="text-gray-600 mb-4">Sign up to add items to your cart and wishlist</p>
-                <div className="flex gap-4">
-                  <button
-                    onClick={() => navigate("/signup")}
-                    className="bg-black text-white hover:bg-gray-800 px-6 py-3 rounded-lg font-medium"
-                  >
-                    Sign Up
-                  </button>
-                  <button
-                    onClick={() => navigate("/login")}
-                    className="border border-black text-black hover:bg-gray-100 px-6 py-3 rounded-lg font-medium"
-                  >
-                    Login
-                  </button>
-                </div>
-              </div>
-            )}
           </div>
         </div>
       </div>

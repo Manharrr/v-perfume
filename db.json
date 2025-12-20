@@ -34,11 +34,18 @@
       "createdAt": "2025-12-15T14:20:58.007Z"
     },
     {
-      "id": 1765983941125,
+      "id": "1765983941125",
       "username": "abcdefg",
       "email": "abc@gmail.com",
       "password": "123456",
       "createdAt": "2025-12-17T15:05:41.125Z"
+    },
+    {
+      "id": "1766051817356",
+      "username": "majls",
+      "email": "majls@gmail.com",
+      "password": "123456",
+      "createdAt": "2025-12-18T09:56:57.356Z"
     }
   ],
   "products": [
@@ -243,6 +250,118 @@
       "description": "A clean and premium fragrance with studio elegance."
     }
   ],
-  "cart": [],
-  "wishlist": []
+  "cart": [
+    {
+      "id": "86bd",
+      "userId": "8fc4",
+      "productId": "24",
+      "name": "Vintage Dark Oud",
+      "price": 2499,
+      "image": "/img/Vintage dark luxury wallpaper.jpg",
+      "brand": "Vintage",
+      "quantity": 1
+    },
+    {
+      "id": "17a2",
+      "userId": "8fc4",
+      "productId": "19",
+      "name": "Kayan Refined Strength",
+      "price": 3199,
+      "image": "/img/KAYAN – The Essence of Refined Strength 🌺🔥.jpg",
+      "brand": "Kayan",
+      "quantity": 1
+    },
+    {
+      "id": "0535",
+      "userId": "1765783581502",
+      "productId": "2",
+      "name": "Daily Luxury Essence",
+      "price": 1599,
+      "image": "/img/✨ Perfumes que Transformam seu Dia! ✨.jpg",
+      "brand": "Everyday Wear",
+      "quantity": 1
+    },
+    {
+      "id": "2c0f",
+      "userId": "1765783581502",
+      "productId": "6",
+      "name": "Elegant Amber Mist",
+      "price": 2499,
+      "image": "/img/download (5).jpg",
+      "brand": "Luxury Series",
+      "quantity": 1
+    },
+    {
+      "id": "8d52",
+      "userId": "1765783581502",
+      "productId": "8",
+      "name": "Royal Oud Classic",
+      "price": 2999,
+      "image": "/img/download (7).jpg",
+      "brand": "Heritage",
+      "quantity": 8
+    },
+    {
+      "id": "cb38",
+      "userId": "1765783581502",
+      "productId": "13",
+      "name": "Soft Floral Touch",
+      "price": 1699,
+      "image": "/img/download (12).jpg",
+      "brand": "Floral Collection",
+      "quantity": 2
+    }
+  ],
+  "wishlist": [
+    {
+      "id": "6175",
+      "userId": "8fc4",
+      "productId": "2",
+      "name": "Daily Luxury Essence",
+      "price": 1599,
+      "image": "/img/✨ Perfumes que Transformam seu Dia! ✨.jpg",
+      "brand": "Everyday Wear",
+      "addedAt": "2025-12-19T14:00:59.035Z"
+    },
+    {
+      "id": "ad0c",
+      "userId": "1765783581502",
+      "productId": "4",
+      "name": "CR7 Signature",
+      "price": 2799,
+      "image": "/img/CR7 Perfume photo shoot.jpg",
+      "brand": "Cristiano Ronaldo",
+      "addedAt": "2025-12-20T05:03:09.304Z"
+    },
+    {
+      "id": "e22a",
+      "userId": "1765783581502",
+      "productId": "18",
+      "name": "AI Product Essence",
+      "price": 1999,
+      "image": "/img/Foto Producto con IA.jpg",
+      "brand": "AI Collection",
+      "addedAt": "2025-12-20T05:13:45.037Z"
+    },
+    {
+      "id": "7d9b",
+      "userId": "1765783581502",
+      "productId": "2",
+      "name": "Daily Luxury Essence",
+      "price": 1599,
+      "image": "/img/✨ Perfumes que Transformam seu Dia! ✨.jpg",
+      "brand": "Everyday Wear",
+      "addedAt": "2025-12-20T05:14:44.028Z"
+    },
+    {
+      "id": "3357",
+      "userId": "1765783581502",
+      "productId": "3",
+      "name": "Valentino Born in Roma",
+      "price": 3499,
+      "image": "/img/ai photo of Valentino born in roma.jpg",
+      "brand": "Valentino",
+      "addedAt": "2025-12-20T05:16:28.036Z"
+    }
+  ]
 }

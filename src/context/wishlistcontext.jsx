@@ -1,57 +1,60 @@
-
 import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-const WishlistContext = createContext();
+const WishlistContext = createContext(null);
 
 export function WishlistProvider({ children }) {
   const [wishlist, setWishlist] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  // Fetch wishlist from db.json ONLY
+  const getUser = () => JSON.parse(localStorage.getItem("user"));
+
+ 
   const fetchWishlist = async () => {
+    const user = getUser();
+    if (!user) {
+      setWishlist([]);
+      setLoading(false);
+      return;
+    }
+
     try {
-      const user = JSON.parse(localStorage.getItem("user"));
-      if (!user) {
-        setWishlist([]);
-        return;
-      }
-      
-      const response = await fetch(`http://localhost:3000/wishlist?userId=${user.id}`);
-      const data = await response.json();
+      setLoading(true);
+      const res = await fetch(
+        `http://localhost:3000/wishlist?userId=${user.id}`
+      );
+      const data = await res.json();
       setWishlist(data);
-    } catch (error) {
-      console.error("Error fetching wishlist:", error);
+    } catch {
       toast.error("Failed to load wishlist");
     } finally {
       setLoading(false);
     }
   };
 
-  // Toggle wishlist in db.json ONLY
+  // whishlist clikkk
   const toggleWishlist = async (product) => {
+    const user = getUser();
+    if (!user) {
+      toast.error("Please login to manage wishlist");
+      return false;
+    }
+
     try {
-      const user = JSON.parse(localStorage.getItem("user"));
-      if (!user) {
-        toast.error("Please login to manage wishlist");
-        return false;
-      }
+      const res = await fetch(
+        `http://localhost:3000/wishlist?userId=${user.id}&productId=${product.id}`
+      );
+      const existing = await res.json();
 
-      // Check if product already in wishlist
-      const response = await fetch(`http://localhost:3000/wishlist?userId=${user.id}&productId=${product.id}`);
-      const existingItems = await response.json();
-
-      if (existingItems.length > 0) {
-        // Remove from wishlist
-        await fetch(`http://localhost:3000/wishlist/${existingItems[0].id}`, {
-          method: 'DELETE'
+      if (existing.length > 0) {
+        await fetch(`http://localhost:3000/wishlist/${existing[0].id}`, {
+          method: "DELETE",//already undell delete
         });
         toast.success("Removed from wishlist");
       } else {
-        // Add to wishlist
-        await fetch('http://localhost:3000/wishlist', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+        await fetch("http://localhost:3000/wishlist", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             userId: user.id,
             productId: product.id,
@@ -59,36 +62,32 @@ export function WishlistProvider({ children }) {
             price: product.price,
             image: product.image,
             brand: product.brand,
-            addedAt: new Date().toISOString()
-          })
+            addedAt: new Date().toISOString(),
+          }),
         });
         toast.success("Added to wishlist");
       }
 
-      await fetchWishlist(); // Refresh wishlist from db.json
+      fetchWishlist();
       return true;
-    } catch (error) {
-      console.error("Error updating wishlist:", error);
+    } catch {
       toast.error("Failed to update wishlist");
       return false;
     }
   };
 
-  // Check if product is in wishlist (from db.json data)
-  const isInWishlist = (productId) => {
-    return wishlist.some(item => item.productId === productId);
-  };
+  //  Check if in wishlist
+  const isInWishlist = (productId) =>
+    wishlist.some((item) => item.productId === productId);
 
-  // Remove from wishlist in db.json ONLY
-  const removeFromWishlist = async (wishlistItemId) => {
+  // Remove item
+  const removeFromWishlist = async (id) => {
     try {
-      await fetch(`http://localhost:3000/wishlist/${wishlistItemId}`, {
-        method: 'DELETE'
+      await fetch(`http://localhost:3000/wishlist/${id}`, {
+        method: "DELETE",
       });
-      toast.success("Removed from wishlist");
-      await fetchWishlist();
-    } catch (error) {
-      console.error("Error removing from wishlist:", error);
+      fetchWishlist();
+    } catch {
       toast.error("Failed to remove from wishlist");
     }
   };
@@ -98,39 +97,19 @@ export function WishlistProvider({ children }) {
   }, []);
 
   return (
-    <WishlistContext.Provider value={{
-      wishlist,
-      toggleWishlist,
-      isInWishlist,
-      removeFromWishlist,
-      fetchWishlist,
-      loading
-    }}>
+    <WishlistContext.Provider
+      value={{
+        wishlist,
+        loading,
+        fetchWishlist,
+        toggleWishlist,
+        isInWishlist,
+        removeFromWishlist,
+      }}
+    >
       {children}
     </WishlistContext.Provider>
   );
 }
 
 export const useWishlist = () => useContext(WishlistContext);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

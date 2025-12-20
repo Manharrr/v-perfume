@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -8,10 +6,8 @@ import a2 from "../assets/cover/a2.jpg";
 import a3 from "../assets/cover/a3.jpg";
 import a4 from "../assets/cover/a4.jpg";
 
+const banners = [a3, a4, a2];
 
-import bannn from "../assets/cover/bannn.jpg"
-
-const banners = [a3, a4, a2,];
 const categories = [
   { name: "Men", path: "/men" },
   { name: "Women", path: "/women" },
@@ -19,12 +15,12 @@ const categories = [
 ];
 
 export default function MainSection() {
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState(0);//banner
   const navigate = useNavigate();
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % banners.length);
+      setCurrent((prev) => (prev + 1) % banners.length);//0+1%3
     }, 3500);
 
     return () => clearInterval(interval);
@@ -33,24 +29,17 @@ export default function MainSection() {
   return (
     <main className="px-4 md:px-6 py-10">
 
-      {/* ================= HERO SLIDER ================= */}
+      {/* banner */}
       <section className="relative w-full h-[420px] md:h-[480px] mb-16 rounded-3xl overflow-hidden shadow-2xl">
         <img
           src={banners[current]}
           alt="Luxury Perfume Banner"
           className="w-full h-full object-cover transition-transform duration-700 scale-105"
         />
-
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-black/35"></div>
-
-        {/* CTA */}
-        <div className="absolute inset-0 flex items-center justify-center">
-         
-        </div>
+        <div className="absolute inset-0 bg-black/35" />
       </section>
 
-      {/* ================= COLLECTIONS ================= */}
+      
       <section className="mb-20">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
           Explore Our Collections
@@ -72,7 +61,7 @@ export default function MainSection() {
         </div>
       </section>
 
-      {/* ================= VIDEO SECTION ================= */}
+      {/* VIDEO */}
       <section className="max-w-5xl mx-auto">
         <div className="relative h-[300px] md:h-[360px] rounded-3xl overflow-hidden shadow-2xl">
 
@@ -86,7 +75,7 @@ export default function MainSection() {
             <source src={vid} type="video/mp4" />
           </video>
 
-          <div className="absolute inset-0 bg-black/40"></div>
+          <div className="absolute inset-0 bg-black/40" />
 
           <div className="absolute inset-0 flex items-center justify-center">
             <button
@@ -105,7 +94,3 @@ export default function MainSection() {
     </main>
   );
 }
-
-
-
-

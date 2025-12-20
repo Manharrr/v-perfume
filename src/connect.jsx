@@ -1,6 +1,3 @@
-
-
-
 import { Routes, Route, Navigate } from "react-router-dom";
 import HomeConnect from "./components/HomeConnect";
 import Products from "./pages/product";
@@ -17,29 +14,28 @@ import Payment from "./pages/payment";
 import NotFound from "./pages/notfound";
 
 
-
-
 export default function Connect() {
   return (
     <Routes>
       <Route path="/" element={<HomeConnect />} />
-   <Route path="product" element={<Products/>}/>
-   <Route path="register" element={<Registration/>}/>
-   <Route path="login" element={<Login/>}/>
-   <Route path="cart" element={<Cart/>}/>
-<Route path="wishlist" element={<Wishlist/>}/>
-<Route path="men" element={<Men/>}/>
-<Route path="women" element={<Women/>}/>
-<Route path="about" element={<About/>}/>
-<Route path="product/:id" element={<ProductDetails/>}/>
+      <Route path="product" element={<Products />} />
+      <Route path="register" element={<Registration />} />
+      <Route path="login" element={<Login />} />
+      <Route path="cart" element={<Cart />} />
+      <Route path="wishlist" element={<Wishlist />} />
+      <Route path="men" element={<Men />} />
+      <Route path="women" element={<Women />} />
+      <Route path="about" element={<About />} />
+      <Route path="exclusive" element={<Exclusive />} />
 
-<Route path="exclusive" element={<Exclusive/>}/>
-<Route path="payment" element={<Payment/>}/>
-<Route path="*" element={<NotFound/>}/>
-{/* <Route path="*" element={<Navigate to="/404"/>}/> */}
+      <Route path="product/:id" element={<ProductDetails />} />
+      <Route path="payment" element={<Payment />} />
+      <Route path="*" element={<NotFound />} />
 
-   
+
+
     </Routes>
+
   );
 }
 

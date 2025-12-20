@@ -8,7 +8,7 @@ export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch cart from db.json ONLY
+  //fetch cart
   const fetchCart = async () => {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
@@ -28,7 +28,7 @@ export function CartProvider({ children }) {
     }
   };
 
-  // Add to cart in db.json ONLY
+  // Add to cart in db.json 
   const addToCart = async (product, quantity = 1) => {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
@@ -50,7 +50,7 @@ export function CartProvider({ children }) {
           body: JSON.stringify({ quantity: existingItem.quantity + quantity })
         });
       } else {
-        // Add new item
+      
         await fetch('http://localhost:3000/cart', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -66,7 +66,7 @@ export function CartProvider({ children }) {
         });
       }
 
-      await fetchCart(); // Refresh cart from db.json
+      await fetchCart(); 
       return true;
     } catch (error) {
       console.error("Error adding to cart:", error);
@@ -75,18 +75,19 @@ export function CartProvider({ children }) {
     }
   };
 
-  // Remove from cart in db.json ONLY
+  // Remove
   const removeFromCart = async (cartItemId) => {
     try {
-      await fetch(`http://localhost:3000/cart/${cartItemId}`, { method: 'DELETE' });
-      await fetchCart(); // Refresh from db.json
+      await fetch(`http://localhost:3000/cart/${cartItemId}`, 
+        { method: 'DELETE' });
+      await fetchCart(); 
     } catch (error) {
       console.error("Error removing from cart:", error);
       toast.error("Failed to remove from cart");
     }
   };
 
-  // Update quantity in db.json ONLY
+
   const updateQuantity = async (cartItemId, quantity) => {
     try {
       await fetch(`http://localhost:3000/cart/${cartItemId}`, {
@@ -94,29 +95,30 @@ export function CartProvider({ children }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ quantity })
       });
-      await fetchCart(); // Refresh from db.json
+      await fetchCart(); 
     } catch (error) {
       console.error("Error updating quantity:", error);
       toast.error("Failed to update quantity");
     }
   };
 
-  // Clear cart from db.json ONLY
+  // Clear crt after payment
   const clearCart = async () => {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
       if (!user) return;
 
-      // Get all cart items for user
+      //allcartitem fetch
       const response = await fetch(`http://localhost:3000/cart?userId=${user.id}`);
       const userCart = await response.json();
       
       // Delete each item
       for (const item of userCart) {
-        await fetch(`http://localhost:3000/cart/${item.id}`, { method: 'DELETE' });
+        await fetch(`http://localhost:3000/cart/${item.id}`,
+           { method: 'DELETE' });
       }
       
-      setCart([]); // Clear local state
+      setCart([]); //clear
     } catch (error) {
       console.error("Error clearing cart:", error);
       toast.error("Failed to clear cart");
@@ -142,26 +144,3 @@ export function CartProvider({ children }) {
   );
 }
 export const useCart = () => useContext(CartContext);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

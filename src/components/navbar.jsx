@@ -6,194 +6,141 @@ import { useWishlist } from "../context/wishlistcontext";
 
 function Navbar() {
   const navigate = useNavigate();
+
   const [user, setUser] = useState(null);
-  
-  // Use context hooks to get cart and wishlist data
+
+  const [menuOpen, setMenuOpen] = useState(false); //  mobile
+
   const { cart } = useCart();
   const { wishlist } = useWishlist();
 
-  // Calculate counts from context
-  const cartCount = cart.reduce((total, item) => total + (item.quantity || 1), 0);
+  const cartCount = cart.reduce((t, i) => t + (i.quantity || 1), 0);
   const wishlistCount = wishlist.length;
 
   useEffect(() => {
-    // Load user from localStorage
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) setUser(JSON.parse(savedUser));
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('user');
+    localStorage.removeItem("user");
     setUser(null);
     toast.success("Logged out successfully");
-    navigate("/login");
+    navigate("/");
   };
 
-  const handleCartClick = () => {
+  const handleProtectedNav = (path, msg) => {
     if (!user) {
-      toast.error("Please login to view cart");
+      toast.error(msg);
       navigate("/login");
       return;
     }
-    navigate("/cart");
-  };
-
-  const handleWishlistClick = () => {
-    if (!user) {
-      toast.error("Please login to view wishlist");
-      navigate("/login");
-      return;
-    }
-    navigate("/wishlist");
+    navigate(path);
+    setMenuOpen(false);
   };
 
   return (
-    <nav className="w-full bg-black text-white px-6 md:px-12 py-4 flex items-center justify-between shadow-lg sticky top-0 z-50">
-      {/* Logo */}
-      <h1 
-        className="text-2xl md:text-3xl font-bold tracking-wider cursor-pointer"
-        onClick={() => navigate("/")}
-      >
-        V-PERFUMÉ
-      </h1>
+    <nav className="w-full bg-black text-white px-6 md:px-12 py-4 sticky top-0 z-50">
+      <div className="flex items-center justify-between">
 
-      {/* Menu */}
-      <ul className="hidden md:flex gap-8 text-sm font-medium">
-        <li 
-          className="hover:text-gray-300 cursor-pointer transition duration-300"
+        
+        <h1
+          className="text-2xl font-bold cursor-pointer"
           onClick={() => navigate("/")}
         >
-          Home
-        </li>
+          V-PERFUMÉ
+        </h1>
 
-        <li 
-          className="hover:text-gray-300 cursor-pointer transition duration-300"
-          onClick={() => navigate("/product")}
-        >
-          Shop
-        </li>
-        <li 
-          className="hover:text-gray-300 cursor-pointer transition duration-300"
-          onClick={() => navigate("/about")}
-        >
-          About Us
-        </li>
-        {/* <li 
-          className="hover:text-gray-300 cursor-pointer transition duration-300"
-          onClick={() => navigate("/men")}
-        >
-          Men
-        </li> */}
-        {/* <li 
-          className="hover:text-gray-300 cursor-pointer transition duration-300"
-          onClick={() => navigate("/women")}
-        >
-          Women
-        </li> */}
-      </ul>
+       
+        <ul className="hidden md:flex gap-8 text-sm font-medium">
+          <li onClick={() => navigate("/")} className="hover:text-gray-300 cursor-pointer">Home</li>
+          <li onClick={() => navigate("/product")} className="hover:text-gray-300 cursor-pointer">Shop</li>
+          <li onClick={() => navigate("/about")} className="hover:text-gray-300 cursor-pointer">About</li>
+        </ul>
 
-      {/* Actions */}
-      <div className="flex items-center gap-6 text-sm">
-        {user ? (
-          <>
-            {/* User Info */}
-            <div className="hidden md:flex items-center gap-3">
-              <div className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center">
-                <span className="font-medium">
-                  {user.username?.charAt(0).toUpperCase() || 
-                   user.email?.charAt(0).toUpperCase()}
-                </span>
-              </div>
-              <div className="text-sm">
-                <p className="font-medium">Hi, {user.username || user.email.split('@')[0]}</p>
-              </div>
-            </div>
-            
-            {/* Logout Button */}
-            <button 
-              onClick={handleLogout}
-              className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition duration-300"
-            >
-              Logout
-            </button>
-          </>
-        ) : (
-          <>
-            {/* Only Sign Up (Register) Button */}
-            <button 
+        
+        <div className="hidden md:flex items-center gap-6">
+          {user ? (
+            <>
+              <span className="text-sm"> {user.username || "User"}</span>
+              <button
+                onClick={handleLogout}
+                className="bg-red-600 px-4 py-2 rounded"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <button
               onClick={() => navigate("/register")}
-              className="bg-white-600 hover:bg-white-700 text-white px-4 py-2 rounded-lg transition duration-300"
+              className="border px-4 py-2 rounded"
             >
               Sign Up
             </button>
-          </>
-        )}
-        
-        {/* Cart Button */}
-        <button 
-          onClick={handleCartClick}
-          className="relative hover:text-gray-300 transition duration-300 flex items-center gap-2"
-        >
-          <span className="text-xl">🛒</span>
-          <span className="hidden md:inline">Cart</span>
-          {cartCount > 0 && (
-            <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-              {cartCount > 99 ? '99+' : cartCount}
-            </span>
           )}
-        </button>
+
         
-        {/* Wishlist Button */}
-        <button 
-          onClick={handleWishlistClick}
-          className="relative hover:text-gray-300 transition duration-300 flex items-center gap-2"
+          <button onClick={() => handleProtectedNav("/cart", "Login to view cart")} className="relative">
+            🛒
+            {cartCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-600 text-xs rounded-full px-1">
+                {cartCount}
+              </span>
+            )}
+          </button>
+
+          <button onClick={() => handleProtectedNav("/wishlist", "Login to view wishlist")} className="relative">
+            ❤️
+            {wishlistCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-600 text-xs rounded-full px-1">
+                {wishlistCount}
+              </span>
+            )}
+          </button>
+        </div>
+
+     {/* Mobile */}
+        <button
+          className="md:hidden"
+          onClick={() => setMenuOpen(!menuOpen)}
         >
-          <span className="text-xl">❤️</span>
-          <span className="hidden md:inline">Wishlist</span>
-          {wishlistCount > 0 && (
-            <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-              {wishlistCount > 99 ? '99+' : wishlistCount}
-            </span>
-          )}
+          <div className="space-y-1">
+            <span className="block w-6 h-0.5 bg-white"></span>
+            <span className="block w-6 h-0.5 bg-white"></span>
+            <span className="block w-6 h-0.5 bg-white"></span>
+          </div>
         </button>
       </div>
+
+      
+      {menuOpen && (
+        <div className="md:hidden mt-4 bg-black border-t border-gray-700">
+          <ul className="flex flex-col gap-4 p-4 text-sm">
+            <li onClick={() => navigate("/")} className="cursor-pointer">Home</li>
+            <li onClick={() => navigate("/product")} className="cursor-pointer">Shop</li>
+            <li onClick={() => navigate("/about")} className="cursor-pointer">About</li>
+
+            <li onClick={() => handleProtectedNav("/cart", "Login to view cart")} className="cursor-pointer">
+              Cart ({cartCount})
+            </li>
+            <li onClick={() => handleProtectedNav("/wishlist", "Login to view wishlist")} className="cursor-pointer">
+              Wishlist ({wishlistCount})
+            </li>
+
+            {user ? (
+              <li onClick={handleLogout} className="text-red-500 cursor-pointer">
+                Logout
+              </li>
+            ) : (
+              <li onClick={() => navigate("/register")} className="cursor-pointer">
+                Sign Up
+              </li>
+            )}
+          </ul>
+        </div>
+      )}
     </nav>
   );
 }
 
 export default Navbar;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
