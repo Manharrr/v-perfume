@@ -23,7 +23,7 @@ function Wishlist() {
   };
 
   const handleViewProduct = (productId) => {
-    navigate(`/product/${productId}`);
+    navigate(`/product/${productId}`);//go detail pg
   };
 
   return (

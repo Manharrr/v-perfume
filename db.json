@@ -4,72 +4,378 @@
       "id": "8fc4",
       "username": "manhar",
       "email": "manhar@gmail.com",
-      "password": "123456"
-    },
-    {
-      "id": "1a96",
-      "username": "hanan",
-      "email": "hanan@gmail.com",
-      "password": "1234567"
+      "password": "123456",
+      "cart": [],
+      "wishlist": [],
+      "orders": [
+        {
+          "id": "1766471321679",
+          "orderId": "ORD321679",
+          "items": [
+            {
+              "productId": "2",
+              "name": "Daily Luxury Essence",
+              "price": 1599,
+              "image": "/img/✨ Perfumes que Transformam seu Dia! ✨.jpg",
+              "brand": "Everyday Wear",
+              "quantity": 1
+            }
+          ],
+          "totalAmount": 1599,
+          "shippingAddress": "mdnfsnfanss, dfghj, asdfgh - 123456",
+          "paymentMethod": "Cash on Delivery",
+          "phone": "1234567898",
+          "customerName": "hey",
+          "paymentDetails": {},
+          "userId": "8fc4",
+          "username": "manhar",
+          "email": "manhar@gmail.com",
+          "orderDate": "2025-12-23T06:28:41.679Z",
+          "status": "Delivered",
+          "trackingId": "TRK71321679",
+          "estimatedDelivery": "2025-12-30T06:28:41.679Z"
+        }
+      ],
+      "status": "active"
     },
     {
       "id": "1765783581502",
       "username": "manu",
       "email": "manu@gmail.com",
       "password": "123456",
-      "createdAt": "2025-12-15T07:26:21.502Z"
+      "createdAt": "2025-12-15T07:26:21.502Z",
+      "cart": [],
+      "wishlist": [],
+      "orders": [
+        {
+          "id": "1766754795300",
+          "orderId": "ORD795300",
+          "items": [
+            {
+              "productId": "19",
+              "name": "Kayan Refined Strength",
+              "price": 3199,
+              "image": "/img/KAYAN – The Essence of Refined Strength 🌺🔥.jpg",
+              "brand": "Kayan",
+              "quantity": 5
+            }
+          ],
+          "totalAmount": 15995,
+          "shippingAddress": "fyt4terdgffg, tirur, kerlaaa - 123456",
+          "paymentMethod": "Cash on Delivery",
+          "phone": "1122334455",
+          "customerName": "manuuuuuu",
+          "paymentDetails": {},
+          "userId": "1765783581502",
+          "username": "manu",
+          "email": "manu@gmail.com",
+          "orderDate": "2025-12-26T13:13:15.300Z",
+          "status": "Shipped",
+          "trackingId": "TRK54795300",
+          "estimatedDelivery": "2026-01-02T13:13:15.300Z"
+        },
+        {
+          "id": "1766987490102",
+          "orderId": "ORD490102",
+          "items": [
+            {
+              "productId": "1766987182593",
+              "name": "bott",
+              "price": 10,
+              "image": "https://media.istockphoto.com/id/517188688/photo/mountain-landscape.jpg?s=612x612&w=0&k=20&c=A63koPKaCyIwQWOTFBRWXj_PwCrR4cEoOw2S9Q7yVl8=",
+              "brand": "aa",
+              "quantity": 1
+            }
+          ],
+          "totalAmount": 10,
+          "shippingAddress": "abcccc, tirur, kerlaaa - 123456",
+          "paymentMethod": "Cash on Delivery",
+          "phone": "1122334455",
+          "customerName": "manuuuuuu",
+          "paymentDetails": {},
+          "userId": "1765783581502",
+          "username": "manu",
+          "email": "manu@gmail.com",
+          "orderDate": "2025-12-29T05:51:30.102Z",
+          "status": "Cancelled",
+          "trackingId": "TRK87490102",
+          "estimatedDelivery": "2026-01-05T05:51:30.102Z"
+        },
+        {
+          "id": "1767103352925",
+          "orderId": "ORD352925",
+          "items": [
+            {
+              "productId": "2",
+              "name": "Daily Luxury Essence",
+              "price": 1599,
+              "image": "/img/✨ Perfumes que Transformam seu Dia! ✨.jpg",
+              "brand": "Everyday Wear",
+              "quantity": 1
+            },
+            {
+              "productId": "3",
+              "name": "Valentino Born in Roma",
+              "price": 3499,
+              "image": "/img/ai photo of Valentino born in roma.jpg",
+              "brand": "Valentino",
+              "quantity": 1
+            }
+          ],
+          "totalAmount": 5098,
+          "shippingAddress": "abcd house, aaaaa, kerala - 123456",
+          "paymentMethod": "Cash on Delivery",
+          "phone": "8330821816",
+          "customerName": "manhar gurukkal",
+          "paymentDetails": {},
+          "userId": "1765783581502",
+          "username": "manu",
+          "email": "manu@gmail.com",
+          "orderDate": "2025-12-30T14:02:32.926Z",
+          "status": "Shipped",
+          "trackingId": "TRK03352926",
+          "estimatedDelivery": "2026-01-06T14:02:32.926Z"
+        }
+      ],
+      "status": "blocked"
     },
     {
       "id": "1765805215921",
       "username": "loyd",
       "email": "loyd@gmail.com",
       "password": "123456",
-      "createdAt": "2025-12-15T13:26:55.921Z"
+      "createdAt": "2025-12-15T13:26:55.921Z",
+      "cart": [],
+      "wishlist": [],
+      "orders": [],
+      "status": "active"
     },
     {
       "id": "1765808458007",
       "username": "bot",
       "email": "bot@gmail.com",
       "password": "123456",
-      "createdAt": "2025-12-15T14:20:58.007Z"
+      "createdAt": "2025-12-15T14:20:58.007Z",
+      "cart": [],
+      "wishlist": [],
+      "orders": [
+        {
+          "id": "1767023749965",
+          "orderId": "ORD749965",
+          "items": [
+            {
+              "productId": "4",
+              "name": "CR7 Signature",
+              "price": 2799,
+              "image": "/img/CR7 Perfume photo shoot.jpg",
+              "brand": "Cristiano Ronaldo",
+              "quantity": 1
+            }
+          ],
+          "totalAmount": 2799,
+          "shippingAddress": "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh, dfghj, kerlaaa - 123344",
+          "paymentMethod": "Cash on Delivery",
+          "phone": "8330821816",
+          "customerName": "zzzy",
+          "paymentDetails": {},
+          "userId": "1765808458007",
+          "username": "bot",
+          "email": "bot@gmail.com",
+          "orderDate": "2025-12-29T15:55:49.965Z",
+          "status": "Cancelled",
+          "trackingId": "TRK23749965",
+          "estimatedDelivery": "2026-01-05T15:55:49.965Z"
+        },
+        {
+          "id": "1767023792608",
+          "orderId": "ORD792608",
+          "items": [
+            {
+              "productId": "11",
+              "name": "Velvet Oud Intense",
+              "price": 3299,
+              "image": "/img/download (10).jpg",
+              "brand": "Oud Series",
+              "quantity": 1
+            },
+            {
+              "productId": "20",
+              "name": "Luxury Oud Timeless",
+              "price": 3999,
+              "image": "/img/Luxury Oud Perfume Bottle – Timeless Elegance & Rich Aroma 🌌✨.jpg",
+              "brand": "Elite Oud",
+              "quantity": 1
+            }
+          ],
+          "totalAmount": 7298,
+          "shippingAddress": "cccccccccccccccccccccccccccccc, dfghj, kerlaaa - 123344",
+          "paymentMethod": "Cash on Delivery",
+          "phone": "8330821816",
+          "customerName": "aaaaaaaa",
+          "paymentDetails": {},
+          "userId": "1765808458007",
+          "username": "bot",
+          "email": "bot@gmail.com",
+          "orderDate": "2025-12-29T15:56:32.608Z",
+          "status": "Pending",
+          "trackingId": "TRK23792608",
+          "estimatedDelivery": "2026-01-05T15:56:32.608Z"
+        },
+        {
+          "id": "1767331121131",
+          "orderId": "ORD121131",
+          "items": [
+            {
+              "productId": "3",
+              "name": "Valentino Born in Roma",
+              "price": 3499,
+              "image": "/img/ai photo of Valentino born in roma.jpg",
+              "brand": "Valentino",
+              "quantity": 1
+            }
+          ],
+          "totalAmount": 3499,
+          "shippingAddress": "iiiiiiiiiiiiii, iii, p - 878888",
+          "paymentMethod": "Cash on Delivery",
+          "phone": "9999999999",
+          "customerName": "uii",
+          "paymentDetails": {},
+          "userId": "1765808458007",
+          "username": "bot",
+          "email": "bot@gmail.com",
+          "orderDate": "2026-01-02T05:18:41.131Z",
+          "status": "Cancelled",
+          "trackingId": "TRK31121131",
+          "estimatedDelivery": "2026-01-09T05:18:41.131Z"
+        }
+      ],
+      "status": "active"
     },
     {
       "id": "1765983941125",
       "username": "abcdefg",
       "email": "abc@gmail.com",
       "password": "123456",
-      "createdAt": "2025-12-17T15:05:41.125Z"
+      "createdAt": "2025-12-17T15:05:41.125Z",
+      "cart": [],
+      "wishlist": [],
+      "orders": [
+        {
+          "id": "1767023690662",
+          "orderId": "ORD690662",
+          "items": [
+            {
+              "productId": "3",
+              "name": "Valentino Born in Roma",
+              "price": 3499,
+              "image": "/img/ai photo of Valentino born in roma.jpg",
+              "brand": "Valentino",
+              "quantity": 1
+            },
+            {
+              "productId": "2",
+              "name": "Daily Luxury Essence",
+              "price": 1599,
+              "image": "/img/✨ Perfumes que Transformam seu Dia! ✨.jpg",
+              "brand": "Everyday Wear",
+              "quantity": 1
+            },
+            {
+              "productId": "4",
+              "name": "CR7 Signature",
+              "price": 2799,
+              "image": "/img/CR7 Perfume photo shoot.jpg",
+              "brand": "Cristiano Ronaldo",
+              "quantity": 1
+            }
+          ],
+          "totalAmount": 7897,
+          "shippingAddress": "abccccdcccdcftshsnbbshg, dfghj, kerlaaa - 123344",
+          "paymentMethod": "Cash on Delivery",
+          "phone": "8330821816",
+          "customerName": "abccc",
+          "paymentDetails": {},
+          "userId": "1765983941125",
+          "username": "abcdefg",
+          "email": "abc@gmail.com",
+          "orderDate": "2025-12-29T15:54:50.662Z",
+          "status": "Pending",
+          "trackingId": "TRK23690662",
+          "estimatedDelivery": "2026-01-05T15:54:50.662Z"
+        }
+      ],
+      "status": "active"
     },
     {
       "id": "1766051817356",
       "username": "majls",
       "email": "majls@gmail.com",
       "password": "123456",
-      "createdAt": "2025-12-18T09:56:57.356Z"
+      "createdAt": "2025-12-18T09:56:57.356Z",
+      "cart": [],
+      "wishlist": [],
+      "orders": [],
+      "status": "active"
+    },
+    {
+      "id": "1766480079199",
+      "username": "brooooooo",
+      "email": "bro@gmail.com",
+      "password": "123456",
+      "createdAt": "2025-12-23T08:54:39.199Z",
+      "cart": [],
+      "wishlist": [
+        {
+          "id": "1766567694443",
+          "productId": "3",
+          "name": "Valentino Born in Roma",
+          "price": 3499,
+          "image": "/img/ai photo of Valentino born in roma.jpg",
+          "brand": "Valentino",
+          "addedAt": "2025-12-24T09:14:54.443Z"
+        }
+      ],
+      "orders": [],
+      "status": "blocked"
+    },
+    {
+      "id": "1767102744951",
+      "username": "manharck",
+      "email": "manuck@gmail.com",
+      "password": "123456",
+      "role": "user",
+      "status": "active",
+      "createdAt": "2025-12-30T13:52:24.951Z",
+      "cart": [],
+      "wishlist": [],
+      "orders": []
     }
   ],
   "products": [
     {
-      "id": "2",
       "name": "Daily Luxury Essence",
       "brand": "Everyday Wear",
-      "price": 1599,
+      "description": "A refreshing everyday perfume that elevates your mood instantly.",
       "image": "/img/✨ Perfumes que Transformam seu Dia! ✨.jpg",
-      "description": "A refreshing everyday perfume that elevates your mood instantly."
+      "price": 1599,
+      "stock": false,
+      "id": "2"
     },
     {
-      "id": "3",
       "name": "Valentino Born in Roma",
       "brand": "Valentino",
-      "price": 3499,
+      "description": "A modern couture fragrance blending elegance and bold masculinity.",
       "image": "/img/ai photo of Valentino born in roma.jpg",
-      "description": "A modern couture fragrance blending elegance and bold masculinity."
+      "price": 3499,
+      "stock": true,
+      "id": "3"
     },
     {
       "id": "4",
       "name": "CR7 Signature",
       "brand": "Cristiano Ronaldo",
       "price": 2799,
+      "stock": true,
       "image": "/img/CR7 Perfume photo shoot.jpg",
       "description": "A powerful and confident fragrance inspired by champions."
     },
@@ -78,6 +384,7 @@
       "name": "Minimal Oud Essence",
       "brand": "Modern Oud",
       "price": 2299,
+      "stock": true,
       "image": "/img/download (4).jpg",
       "description": "A clean and minimal oud fragrance with long-lasting appeal."
     },
@@ -86,6 +393,7 @@
       "name": "Elegant Amber Mist",
       "brand": "Luxury Series",
       "price": 2499,
+      "stock": true,
       "image": "/img/download (5).jpg",
       "description": "Warm amber notes blended with soft spices."
     },
@@ -94,6 +402,7 @@
       "name": "Midnight Noir",
       "brand": "Elite",
       "price": 2699,
+      "stock": true,
       "image": "/img/download (6).jpg",
       "description": "A dark, mysterious fragrance crafted for night wear."
     },
@@ -102,6 +411,7 @@
       "name": "Royal Oud Classic",
       "brand": "Heritage",
       "price": 2999,
+      "stock": true,
       "image": "/img/download (7).jpg",
       "description": "Classic oud scent with rich woody tones."
     },
@@ -110,6 +420,7 @@
       "name": "Golden Musk",
       "brand": "Luxury Blend",
       "price": 2199,
+      "stock": true,
       "image": "/img/download (8).jpg",
       "description": "Soft musk blended with golden floral notes."
     },
@@ -118,6 +429,7 @@
       "name": "Fresh Citrus Bloom",
       "brand": "Fresh Line",
       "price": 1799,
+      "stock": true,
       "image": "/img/download (9).jpg",
       "description": "A refreshing citrus fragrance for daily freshness."
     },
@@ -126,6 +438,7 @@
       "name": "Velvet Oud Intense",
       "brand": "Oud Series",
       "price": 3299,
+      "stock": true,
       "image": "/img/download (10).jpg",
       "description": "Deep and intense oud with velvety smoothness."
     },
@@ -134,6 +447,7 @@
       "name": "Spice Wood Elixir",
       "brand": "Spice Collection",
       "price": 2599,
+      "stock": true,
       "image": "/img/download (11).jpg",
       "description": "Warm spices blended with rich woods."
     },
@@ -142,6 +456,7 @@
       "name": "Soft Floral Touch",
       "brand": "Floral Collection",
       "price": 1699,
+      "stock": true,
       "image": "/img/download (12).jpg",
       "description": "Light floral fragrance with a gentle feminine touch."
     },
@@ -150,6 +465,7 @@
       "name": "Amber Nightfall",
       "brand": "Signature",
       "price": 2399,
+      "stock": true,
       "image": "/img/download (13).jpg",
       "description": "Amber-rich fragrance perfect for evening wear."
     },
@@ -158,6 +474,7 @@
       "name": "Classic Oud Reserve",
       "brand": "Reserve",
       "price": 3599,
+      "stock": true,
       "image": "/img/download (14).jpg",
       "description": "Premium oud fragrance for true connoisseurs."
     },
@@ -166,6 +483,7 @@
       "name": "Pure Musk Essence",
       "brand": "Musk Series",
       "price": 1899,
+      "stock": true,
       "image": "/img/download (15).jpg",
       "description": "Clean and calming musk fragrance."
     },
@@ -174,6 +492,7 @@
       "name": "Woody Fresh Blend",
       "brand": "Nature",
       "price": 2099,
+      "stock": true,
       "image": "/img/download (16).jpg",
       "description": "Woody notes balanced with fresh undertones."
     },
@@ -182,6 +501,7 @@
       "name": "AI Product Essence",
       "brand": "AI Collection",
       "price": 1999,
+      "stock": true,
       "image": "/img/Foto Producto con IA.jpg",
       "description": "A modern fragrance inspired by artificial intelligence aesthetics."
     },
@@ -190,6 +510,7 @@
       "name": "Kayan Refined Strength",
       "brand": "Kayan",
       "price": 3199,
+      "stock": true,
       "image": "/img/KAYAN – The Essence of Refined Strength 🌺🔥.jpg",
       "description": "A powerful blend of floral warmth and woody strength."
     },
@@ -198,6 +519,7 @@
       "name": "Luxury Oud Timeless",
       "brand": "Elite Oud",
       "price": 3999,
+      "stock": true,
       "image": "/img/Luxury Oud Perfume Bottle – Timeless Elegance & Rich Aroma 🌌✨.jpg",
       "description": "An intense oud fragrance crafted for timeless elegance."
     },
@@ -206,6 +528,7 @@
       "name": "Rose Petal Elixir",
       "brand": "Floral Luxury",
       "price": 1899,
+      "stock": true,
       "image": "/img/Rose Petal Elixir phone wallpaper.jpg",
       "description": "Romantic rose fragrance with soft sweetness."
     },
@@ -214,6 +537,7 @@
       "name": "Tom Ford Ombre Leather",
       "brand": "Tom Ford",
       "price": 4599,
+      "stock": true,
       "image": "/img/Tom Ford Ombre Leather.jpg",
       "description": "Bold leather fragrance with smoky depth."
     },
@@ -222,6 +546,7 @@
       "name": "Valentino Classic",
       "brand": "Valentino",
       "price": 3399,
+      "stock": true,
       "image": "/img/Valentino.jpg",
       "description": "A refined designer fragrance with modern elegance."
     },
@@ -230,138 +555,26 @@
       "name": "Vintage Dark Oud",
       "brand": "Vintage",
       "price": 2499,
+      "stock": true,
       "image": "/img/Vintage dark luxury wallpaper.jpg",
       "description": "Dark vintage fragrance with rich oud notes."
     },
     {
       "id": "25",
       "name": "Wildberries Signature Oud",
-      "brand": "WB Collection",
+      "brand": "oud series",
       "price": 2299,
-      "image": "/img/wildberries визуал, озон фото, фото для wb, карточка товара.jpg",
-      "description": "Modern oud fragrance designed for long-lasting impact."
-    },
-    {
-      "id": "26",
-      "name": "Premium Product Shoot",
-      "brand": "Studio",
-      "price": 2199,
-      "image": "/img/Предметная съемка.jpg",
-      "description": "A clean and premium fragrance with studio elegance."
+      "stock": true,
+      "description": "Modern oud fragrance designed for long-lasting impact.",
+      "image": "/img/wildberries визуал, озон фото, фото для wb, карточка товара.jpg"
     }
   ],
-  "cart": [
+  "admins": [
     {
-      "id": "86bd",
-      "userId": "8fc4",
-      "productId": "24",
-      "name": "Vintage Dark Oud",
-      "price": 2499,
-      "image": "/img/Vintage dark luxury wallpaper.jpg",
-      "brand": "Vintage",
-      "quantity": 1
-    },
-    {
-      "id": "17a2",
-      "userId": "8fc4",
-      "productId": "19",
-      "name": "Kayan Refined Strength",
-      "price": 3199,
-      "image": "/img/KAYAN – The Essence of Refined Strength 🌺🔥.jpg",
-      "brand": "Kayan",
-      "quantity": 1
-    },
-    {
-      "id": "0535",
-      "userId": "1765783581502",
-      "productId": "2",
-      "name": "Daily Luxury Essence",
-      "price": 1599,
-      "image": "/img/✨ Perfumes que Transformam seu Dia! ✨.jpg",
-      "brand": "Everyday Wear",
-      "quantity": 1
-    },
-    {
-      "id": "2c0f",
-      "userId": "1765783581502",
-      "productId": "6",
-      "name": "Elegant Amber Mist",
-      "price": 2499,
-      "image": "/img/download (5).jpg",
-      "brand": "Luxury Series",
-      "quantity": 1
-    },
-    {
-      "id": "8d52",
-      "userId": "1765783581502",
-      "productId": "8",
-      "name": "Royal Oud Classic",
-      "price": 2999,
-      "image": "/img/download (7).jpg",
-      "brand": "Heritage",
-      "quantity": 8
-    },
-    {
-      "id": "cb38",
-      "userId": "1765783581502",
-      "productId": "13",
-      "name": "Soft Floral Touch",
-      "price": 1699,
-      "image": "/img/download (12).jpg",
-      "brand": "Floral Collection",
-      "quantity": 2
-    }
-  ],
-  "wishlist": [
-    {
-      "id": "6175",
-      "userId": "8fc4",
-      "productId": "2",
-      "name": "Daily Luxury Essence",
-      "price": 1599,
-      "image": "/img/✨ Perfumes que Transformam seu Dia! ✨.jpg",
-      "brand": "Everyday Wear",
-      "addedAt": "2025-12-19T14:00:59.035Z"
-    },
-    {
-      "id": "ad0c",
-      "userId": "1765783581502",
-      "productId": "4",
-      "name": "CR7 Signature",
-      "price": 2799,
-      "image": "/img/CR7 Perfume photo shoot.jpg",
-      "brand": "Cristiano Ronaldo",
-      "addedAt": "2025-12-20T05:03:09.304Z"
-    },
-    {
-      "id": "e22a",
-      "userId": "1765783581502",
-      "productId": "18",
-      "name": "AI Product Essence",
-      "price": 1999,
-      "image": "/img/Foto Producto con IA.jpg",
-      "brand": "AI Collection",
-      "addedAt": "2025-12-20T05:13:45.037Z"
-    },
-    {
-      "id": "7d9b",
-      "userId": "1765783581502",
-      "productId": "2",
-      "name": "Daily Luxury Essence",
-      "price": 1599,
-      "image": "/img/✨ Perfumes que Transformam seu Dia! ✨.jpg",
-      "brand": "Everyday Wear",
-      "addedAt": "2025-12-20T05:14:44.028Z"
-    },
-    {
-      "id": "3357",
-      "userId": "1765783581502",
-      "productId": "3",
-      "name": "Valentino Born in Roma",
-      "price": 3499,
-      "image": "/img/ai photo of Valentino born in roma.jpg",
-      "brand": "Valentino",
-      "addedAt": "2025-12-20T05:16:28.036Z"
+      "id": "admin1",
+      "name": "Admin",
+      "email": "admin@gmail.com",
+      "password": "123456"
     }
   ]
 }

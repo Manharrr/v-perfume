@@ -7,6 +7,7 @@ import { useCart } from "../context/cartcontext";
 import { useWishlist } from "../context/wishlistcontext";
 import { useAuth } from "../context/auth";
 import toast from "react-hot-toast";
+import {api} from "../../api/Axios";
 
 function Women() {
   const [products, setProducts] = useState([]);
@@ -23,12 +24,10 @@ function Women() {
 
   const fetchWomenProducts = async () => {
     try {
-      const res = await fetch("http://localhost:3000/products");
-      const data = await res.json();
-      setProducts(
-        data.filter((p) => Number(p.id) >= 13 && Number(p.id) <= 20)
-      );
-    } catch {
+      const data = await api.get("/products"); // Using axios
+      setProducts(data.filter((p) => Number(p.id) >= 13 && Number(p.id) <= 20));
+    } catch (err) {
+      console.error("Error fetching women products:", err);
       toast.error("Failed to load products");
     } finally {
       setLoading(false);
@@ -43,17 +42,16 @@ function Women() {
       return;
     }
     await addToCart(product);
-         toast.success("Added to cart");
   };
 
-  const handleToggleWishlist = (product, e) => {
+  const handleToggleWishlist = async (product, e) => {
     e.stopPropagation();
     if (!user) {
       toast.error("Please login to manage wishlist");
       navigate("/login");
       return;
     }
-    toggleWishlist(product);
+    await toggleWishlist(product);
   };
 
   const handleBuyNow = (product, e) => {
@@ -84,44 +82,49 @@ function Women() {
               <div
                 key={product.id}
                 onClick={() => navigate(`/product/${product.id}`)}
-                className="border rounded-lg overflow-hidden cursor-pointer hover:shadow-xl relative"
+                className="border rounded-lg overflow-hidden cursor-pointer hover:shadow-xl relative group"
               >
-                {/* Wishlist */}
+                {/* Wishlist Button */}
                 <button
                   onClick={(e) => handleToggleWishlist(product, e)}
-                  className="absolute top-3 right-3 bg-white p-2 rounded-full z-10"
+                  className="absolute top-3 right-3 bg-white p-2 rounded-full z-10 hover:scale-110 transition-transform"
                 >
                   {isInWishlist(product.id) ? (
-                    <FaHeart className="text-red-500" />
+                    <FaHeart className="text-red-500 text-lg" />
                   ) : (
-                    <FaRegHeart />
+                    <FaRegHeart className="text-lg" />
                   )}
                 </button>
 
-                {/* ✅ FIXED IMAGE SIZE (SAME AS MEN) */}
+                {/* Product Image */}
                 <div className="w-full aspect-[4/3] overflow-hidden">
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "https://via.placeholder.com/300x400?text=Perfume";
+                    }}
                   />
                 </div>
 
+                {/* Product Info */}
                 <div className="p-4">
-                  <h3 className="font-bold">{product.name}</h3>
-                  <p className="text-sm text-gray-600">{product.brand}</p>
-                  <p className="font-bold text-lg mt-2">₹{product.price}</p>
+                  <h3 className="font-bold text-lg truncate">{product.name}</h3>
+                  <p className="text-sm text-gray-600 truncate">{product.brand}</p>
+                  <p className="font-bold text-xl mt-2">₹{product.price}</p>
 
                   <div className="flex gap-2 mt-4">
                     <button
                       onClick={(e) => handleAddToCart(product, e)}
-                      className="flex-1 bg-black text-white py-2 rounded"
+                      className="flex-1 bg-black text-white py-2 rounded hover:bg-gray-800 transition-colors"
                     >
                       Add to Cart
                     </button>
                     <button
                       onClick={(e) => handleBuyNow(product, e)}
-                      className="flex-1 border py-2 rounded"
+                      className="flex-1 border border-black py-2 rounded hover:bg-black hover:text-white transition-colors"
                     >
                       Buy Now
                     </button>
@@ -129,6 +132,18 @@ function Women() {
                 </div>
               </div>
             ))}
+          </div>
+        )}
+
+        {!loading && products.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-gray-600 mb-4">No products found in women's collection</p>
+            <button
+              onClick={() => navigate("/product")}
+              className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800"
+            >
+              Browse All Products
+            </button>
           </div>
         )}
       </div>

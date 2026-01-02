@@ -1,11 +1,13 @@
 import React from "react";
-import Connect from "./Connect";
+import Connect from "./connect";
 import { Toaster } from "react-hot-toast";
+import Adminconnect from "./adminconnect";
 
 function App() {
   return (
     <div>
       <Connect />
+      
 
       <Toaster
         position="top-left"
