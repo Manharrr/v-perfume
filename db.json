@@ -137,7 +137,7 @@
           "estimatedDelivery": "2026-01-06T14:02:32.926Z"
         }
       ],
-      "status": "blocked"
+      "status": "active"
     },
     {
       "id": "1765805215921",
@@ -244,7 +244,7 @@
           "username": "bot",
           "email": "bot@gmail.com",
           "orderDate": "2026-01-02T05:18:41.131Z",
-          "status": "Cancelled",
+          "status": "Delivered",
           "trackingId": "TRK31121131",
           "estimatedDelivery": "2026-01-09T05:18:41.131Z"
         }
@@ -336,7 +336,7 @@
         }
       ],
       "orders": [],
-      "status": "blocked"
+      "status": "active"
     },
     {
       "id": "1767102744951",
@@ -358,7 +358,7 @@
       "description": "A refreshing everyday perfume that elevates your mood instantly.",
       "image": "/img/✨ Perfumes que Transformam seu Dia! ✨.jpg",
       "price": 1599,
-      "stock": false,
+      "stock": true,
       "id": "2"
     },
     {
@@ -567,6 +567,15 @@
       "stock": true,
       "description": "Modern oud fragrance designed for long-lasting impact.",
       "image": "/img/wildberries визуал, озон фото, фото для wb, карточка товара.jpg"
+    },
+    {
+      "id": "1775903974612",
+      "name": "lokha",
+      "brand": "bhumi",
+      "description": "oiuytrewq ljhgf nb",
+      "image": "",
+      "price": 9999,
+      "stock": true
     }
   ],
   "admins": [

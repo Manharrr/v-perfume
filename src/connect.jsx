@@ -59,7 +59,6 @@ export default function Connect() {
         <Route path="/admin/users/:id" element={<UserDetails/>}/>
 
       </Route>
-
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
