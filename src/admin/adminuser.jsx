@@ -7,6 +7,7 @@ import {
   MagnifyingGlassIcon,
   UserCircleIcon
 } from "@heroicons/react/24/outline";
+import { api } from "../../api/Axios";
 
 export default function AdminUsers() {
   const [users, setUsers] = useState([]);
@@ -26,8 +27,7 @@ export default function AdminUsers() {
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:3000/users");
-      const data = await res.json();
+      const data = await api.get("/users");
       
       // out.. admin 
       const regularUsers = data.filter(user => user.role !== "admin");
@@ -80,11 +80,7 @@ export default function AdminUsers() {
      const updatedUser = {...user, status: newStatus};
 
     try {//update
-      await fetch(`http://localhost:3000/users/${user.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedUser)
-      });
+      await api.put(`/users/${user.id}`, updatedUser);
 
       setUsers(users.map(u => 
         u.id === user.id ? updatedUser : u

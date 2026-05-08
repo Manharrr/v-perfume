@@ -244,7 +244,7 @@
           "username": "bot",
           "email": "bot@gmail.com",
           "orderDate": "2026-01-02T05:18:41.131Z",
-          "status": "Cancelled",
+          "status": "Delivered",
           "trackingId": "TRK31121131",
           "estimatedDelivery": "2026-01-09T05:18:41.131Z"
         }
@@ -315,7 +315,7 @@
       "cart": [],
       "wishlist": [],
       "orders": [],
-      "status": "active"
+      "status": "blocked"
     },
     {
       "id": "1766480079199",
@@ -358,8 +358,10 @@
       "description": "A refreshing everyday perfume that elevates your mood instantly.",
       "image": "/img/✨ Perfumes que Transformam seu Dia! ✨.jpg",
       "price": 1599,
-      "stock": false,
-      "id": "2"
+      "stock": true,
+      "id": "2",
+      "category": "men",
+      "isExclusive": false
     },
     {
       "name": "Valentino Born in Roma",
@@ -368,7 +370,9 @@
       "image": "/img/ai photo of Valentino born in roma.jpg",
       "price": 3499,
       "stock": true,
-      "id": "3"
+      "id": "3",
+      "category": "men",
+      "isExclusive": false
     },
     {
       "id": "4",
@@ -377,7 +381,9 @@
       "price": 2799,
       "stock": true,
       "image": "/img/CR7 Perfume photo shoot.jpg",
-      "description": "A powerful and confident fragrance inspired by champions."
+      "description": "A powerful and confident fragrance inspired by champions.",
+      "category": "men",
+      "isExclusive": false
     },
     {
       "id": "5",
@@ -386,7 +392,9 @@
       "price": 2299,
       "stock": true,
       "image": "/img/download (4).jpg",
-      "description": "A clean and minimal oud fragrance with long-lasting appeal."
+      "description": "A clean and minimal oud fragrance with long-lasting appeal.",
+      "category": "men",
+      "isExclusive": false
     },
     {
       "id": "6",
@@ -395,7 +403,9 @@
       "price": 2499,
       "stock": true,
       "image": "/img/download (5).jpg",
-      "description": "Warm amber notes blended with soft spices."
+      "description": "Warm amber notes blended with soft spices.",
+      "category": "men",
+      "isExclusive": false
     },
     {
       "id": "7",
@@ -404,7 +414,9 @@
       "price": 2699,
       "stock": true,
       "image": "/img/download (6).jpg",
-      "description": "A dark, mysterious fragrance crafted for night wear."
+      "description": "A dark, mysterious fragrance crafted for night wear.",
+      "category": "men",
+      "isExclusive": false
     },
     {
       "id": "8",
@@ -413,7 +425,9 @@
       "price": 2999,
       "stock": true,
       "image": "/img/download (7).jpg",
-      "description": "Classic oud scent with rich woody tones."
+      "description": "Classic oud scent with rich woody tones.",
+      "category": "men",
+      "isExclusive": false
     },
     {
       "id": "9",
@@ -422,7 +436,9 @@
       "price": 2199,
       "stock": true,
       "image": "/img/download (8).jpg",
-      "description": "Soft musk blended with golden floral notes."
+      "description": "Soft musk blended with golden floral notes.",
+      "category": "men",
+      "isExclusive": false
     },
     {
       "id": "10",
@@ -431,7 +447,9 @@
       "price": 1799,
       "stock": true,
       "image": "/img/download (9).jpg",
-      "description": "A refreshing citrus fragrance for daily freshness."
+      "description": "A refreshing citrus fragrance for daily freshness.",
+      "category": "men",
+      "isExclusive": false
     },
     {
       "id": "11",
@@ -440,7 +458,9 @@
       "price": 3299,
       "stock": true,
       "image": "/img/download (10).jpg",
-      "description": "Deep and intense oud with velvety smoothness."
+      "description": "Deep and intense oud with velvety smoothness.",
+      "category": "men",
+      "isExclusive": false
     },
     {
       "id": "12",
@@ -449,7 +469,9 @@
       "price": 2599,
       "stock": true,
       "image": "/img/download (11).jpg",
-      "description": "Warm spices blended with rich woods."
+      "description": "Warm spices blended with rich woods.",
+      "category": "men",
+      "isExclusive": false
     },
     {
       "id": "13",
@@ -458,7 +480,9 @@
       "price": 1699,
       "stock": true,
       "image": "/img/download (12).jpg",
-      "description": "Light floral fragrance with a gentle feminine touch."
+      "description": "Light floral fragrance with a gentle feminine touch.",
+      "category": "women",
+      "isExclusive": false
     },
     {
       "id": "14",
@@ -467,7 +491,9 @@
       "price": 2399,
       "stock": true,
       "image": "/img/download (13).jpg",
-      "description": "Amber-rich fragrance perfect for evening wear."
+      "description": "Amber-rich fragrance perfect for evening wear.",
+      "category": "women",
+      "isExclusive": false
     },
     {
       "id": "15",
@@ -476,7 +502,9 @@
       "price": 3599,
       "stock": true,
       "image": "/img/download (14).jpg",
-      "description": "Premium oud fragrance for true connoisseurs."
+      "description": "Premium oud fragrance for true connoisseurs.",
+      "category": "women",
+      "isExclusive": false
     },
     {
       "id": "16",
@@ -485,7 +513,9 @@
       "price": 1899,
       "stock": true,
       "image": "/img/download (15).jpg",
-      "description": "Clean and calming musk fragrance."
+      "description": "Clean and calming musk fragrance.",
+      "category": "women",
+      "isExclusive": false
     },
     {
       "id": "17",
@@ -494,7 +524,9 @@
       "price": 2099,
       "stock": true,
       "image": "/img/download (16).jpg",
-      "description": "Woody notes balanced with fresh undertones."
+      "description": "Woody notes balanced with fresh undertones.",
+      "category": "women",
+      "isExclusive": false
     },
     {
       "id": "18",
@@ -503,7 +535,9 @@
       "price": 1999,
       "stock": true,
       "image": "/img/Foto Producto con IA.jpg",
-      "description": "A modern fragrance inspired by artificial intelligence aesthetics."
+      "description": "A modern fragrance inspired by artificial intelligence aesthetics.",
+      "category": "women",
+      "isExclusive": true
     },
     {
       "id": "19",
@@ -512,7 +546,9 @@
       "price": 3199,
       "stock": true,
       "image": "/img/KAYAN – The Essence of Refined Strength 🌺🔥.jpg",
-      "description": "A powerful blend of floral warmth and woody strength."
+      "description": "A powerful blend of floral warmth and woody strength.",
+      "category": "women",
+      "isExclusive": true
     },
     {
       "id": "20",
@@ -521,7 +557,9 @@
       "price": 3999,
       "stock": true,
       "image": "/img/Luxury Oud Perfume Bottle – Timeless Elegance & Rich Aroma 🌌✨.jpg",
-      "description": "An intense oud fragrance crafted for timeless elegance."
+      "description": "An intense oud fragrance crafted for timeless elegance.",
+      "category": "women",
+      "isExclusive": true
     },
     {
       "id": "21",
@@ -530,7 +568,9 @@
       "price": 1899,
       "stock": true,
       "image": "/img/Rose Petal Elixir phone wallpaper.jpg",
-      "description": "Romantic rose fragrance with soft sweetness."
+      "description": "Romantic rose fragrance with soft sweetness.",
+      "category": "other",
+      "isExclusive": true
     },
     {
       "id": "22",
@@ -539,7 +579,9 @@
       "price": 4599,
       "stock": true,
       "image": "/img/Tom Ford Ombre Leather.jpg",
-      "description": "Bold leather fragrance with smoky depth."
+      "description": "Bold leather fragrance with smoky depth.",
+      "category": "other",
+      "isExclusive": true
     },
     {
       "id": "23",
@@ -548,7 +590,9 @@
       "price": 3399,
       "stock": true,
       "image": "/img/Valentino.jpg",
-      "description": "A refined designer fragrance with modern elegance."
+      "description": "A refined designer fragrance with modern elegance.",
+      "category": "other",
+      "isExclusive": true
     },
     {
       "id": "24",
@@ -557,7 +601,9 @@
       "price": 2499,
       "stock": true,
       "image": "/img/Vintage dark luxury wallpaper.jpg",
-      "description": "Dark vintage fragrance with rich oud notes."
+      "description": "Dark vintage fragrance with rich oud notes.",
+      "category": "other",
+      "isExclusive": true
     },
     {
       "id": "25",
@@ -566,7 +612,20 @@
       "price": 2299,
       "stock": true,
       "description": "Modern oud fragrance designed for long-lasting impact.",
-      "image": "/img/wildberries визуал, озон фото, фото для wb, карточка товара.jpg"
+      "image": "/img/wildberries визуал, озон фото, фото для wb, карточка товара.jpg",
+      "category": "other",
+      "isExclusive": true
+    },
+    {
+      "id": "1775903974612",
+      "name": "lokha",
+      "brand": "bhumi",
+      "description": "oiuytrewq ljhgf nb",
+      "image": "",
+      "price": 9999,
+      "stock": true,
+      "category": "other",
+      "isExclusive": false
     }
   ],
   "admins": [

@@ -2,20 +2,20 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext(null);
 
+import { authService } from "../services/authService";
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem("user");
-    return saved ? JSON.parse(saved) : null;
+    return authService.getCurrentUser();
   });
 
   const login = (data) => {
     setUser(data);
-    localStorage.setItem("user", JSON.stringify(data));
   };
 
   const logout = () => {
+    authService.logout();
     setUser(null);
-    localStorage.removeItem("user");
   };
 
   return (

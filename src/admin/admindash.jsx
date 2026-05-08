@@ -279,10 +279,10 @@ export default function AdminDashboard() {
     setLoading(true);
     try {
       
-      const users = await api.get("/users");
+      const users = await api.get("/api/users/");
       
       
-      const products = await api.get("/products");
+      const products = await api.get("/api/products/perfumes/");
       
       
       let allOrders = [];

@@ -6,6 +6,7 @@ import {
   ShoppingBagIcon,
   NoSymbolIcon
 } from "@heroicons/react/24/outline";
+import { api } from "../../api/Axios";
 
 export default function Analytics() {
   const [stats, setStats] = useState({
@@ -24,13 +25,10 @@ export default function Analytics() {
   const fetchStats = async () => {
     setLoading(true);
     try {
-      const [usersRes, productsRes] = await Promise.all([
-        fetch("http://localhost:3000/users"),
-        fetch("http://localhost:3000/products")
+      const [users, products] = await Promise.all([
+        api.get("/api/users/"),
+        api.get("/api/products/perfumes/")
       ]);
-      
-      const users = await usersRes.json();
-      const products = await productsRes.json();
 
       // Calculate stats
       let totalRevenue = 0;

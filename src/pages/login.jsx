@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
-import api from "../../api/Axios";
+import { useAuth } from "../context/auth";
+import { authService } from "../services/authService";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -9,6 +10,7 @@ function Login() {
     password: ""
   });
   const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -20,7 +22,8 @@ function Login() {
 
   const validateForm = () => {
     if (!formData.email.trim()) return "Email is required";
-    if (!formData.email.includes("@gmail.com")) return "Please enter a valid email";
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) return "Please enter a valid email";
     if (!formData.password) return "Password is required";
     return null;
   };
@@ -36,30 +39,10 @@ function Login() {
     setLoading(true);
 
     try {
-      const users = await api.get("/users");
-      const user = users.find(
-        u => u.email === formData.email && u.password === formData.password
-      );
-
-      if (!user) {
-        toast.error("Invalid email or password");
-        setLoading(false);
-        return;
-      }
-
-      // ✅ ADD THIS CHECK: Check if user is blocked
-      if (user.status === "blocked") {
-        toast.error("Your account has been blocked. Please contact support.");
-        setLoading(false);
-        return;
-      }
-
-      localStorage.setItem('user', JSON.stringify({
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        status: user.status // Also store status for future checks
-      }));
+      const user = await authService.login(formData.email, formData.password);
+      
+      // The context's login function updates the global state
+      login(user);
 
       toast.success("Login successful");
       setTimeout(() => {
@@ -68,7 +51,7 @@ function Login() {
 
     } catch (error) {
       console.error("Login error:", error);
-      toast.error("Login failed. Please try again.");
+      toast.error(error.message || "Login failed. Please try again.");
     } finally {
       setLoading(false);
     }

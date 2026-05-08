@@ -26,6 +26,9 @@ import Analytics from "./admin/analytics";
 import AdminProductDetails from "./admin/adminproductdetails";
 import UserDetails from "./admin/userdetails";
 
+import ProtectedRoute from "./routes/ProtectedRoute";
+import AdminRoute from "./routes/AdminRoute";
+
 export default function Connect() {
   return (
     <Routes>
@@ -39,16 +42,16 @@ export default function Connect() {
       <Route path="/about" element={<About />} />
       <Route path="/register" element={<Registration />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/cart" element={<Cart />} />
-      <Route path="/wishlist" element={<Wishlist />} />
-      <Route path="/payment" element={<Payment />} />
-      <Route path="/order" element={<Order />} />
-      <Route path="/order/:id" element={<OrderDetails />} />
+      <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
+      <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
+      <Route path="/payment" element={<ProtectedRoute><Payment /></ProtectedRoute>} />
+      <Route path="/order" element={<ProtectedRoute><Order /></ProtectedRoute>} />
+      <Route path="/order/:id" element={<ProtectedRoute><OrderDetails /></ProtectedRoute>} />
 
       
       <Route path="/adminlogin" element={<AdminLogin />} />
       
-      <Route path="/admin" element={<AdminLayout />}>
+      <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
         <Route index element={<AdminDashboard />} />
         <Route path="products" element={<AdminProducts />} />
         <Route path="users" element={<AdminUsers />} />

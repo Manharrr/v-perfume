@@ -1,13 +1,13 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { api } from "../../api/Axios";
 
 export default function UserDetails() {
   const { id } = useParams();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/users/${id}`)
-      .then(res => res.json())
+    api.get(`/users/${id}`)
       .then(data => setUser(data));
   }, [id]);
 

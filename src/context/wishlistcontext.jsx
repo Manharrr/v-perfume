@@ -62,7 +62,7 @@ export function WishlistProvider({ children }) {
           name: product.name,
           price: product.price,
           image: product.image,
-          brand: product.brand || "Unknown",
+          brand: product.brand?.name || product.brand || "Unknown",
           addedAt: new Date().toISOString()
         };
         updatedWishlist = [...userWishlist, newItem];

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
-import { api } from "../../api/Axios";
+import { api } from "../utils/api";
+import { authService } from "../services/authService";
+import { useAuth } from "../context/auth";
 
 function Registration() {
   const [formData, setFormData] = useState({
@@ -11,6 +13,7 @@ function Registration() {
     confirmPassword: ""
   });
   const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -21,7 +24,8 @@ function Registration() {
     if (!formData.username.trim()) return "Username is required";
     if (formData.username.trim().length < 3)
       return "Username must be at least 3 characters";
-    if (!/\S+@\S+\.\S+/.test(formData.email))
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email))
       return "Please enter a valid email";
     if (!formData.password) return "Password is required";
     if (formData.password.length < 6)
@@ -33,8 +37,8 @@ function Registration() {
 
   const checkExistingUser = async (email) => {
     try {
-      const res = await api.get("/users");
-      return res.data.some(user => user.email === email);
+      const users = await api.get(`/users?email=${email}`);
+      return users.length > 0;
     } catch (error) {
       console.error(error);
       return false;
@@ -77,14 +81,9 @@ function Registration() {
 
       toast.success("Registration successful!");
 
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          id: newUser.id,
-          username: newUser.username,
-          email: newUser.email
-        })
-      );
+      // Log the user in with the newly created credentials
+      const user = await authService.login(formData.email, formData.password);
+      login(user);
 
       navigate("/");
     } catch (error) {

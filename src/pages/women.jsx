@@ -7,7 +7,7 @@ import { useCart } from "../context/cartcontext";
 import { useWishlist } from "../context/wishlistcontext";
 import { useAuth } from "../context/auth";
 import toast from "react-hot-toast";
-import {api} from "../../api/Axios";
+import { api } from "../utils/api";
 
 function Women() {
   const [products, setProducts] = useState([]);
@@ -24,8 +24,8 @@ function Women() {
 
   const fetchWomenProducts = async () => {
     try {
-      const data = await api.get("/products"); // Using axios
-      setProducts(data.filter((p) => Number(p.id) >= 13 && Number(p.id) <= 20));
+      const data = await api.get("/api/products/perfumes/"); // Using axios
+      setProducts(data.filter((p) => (p.category?.name?.toLowerCase() || p.category) === "women" || (p.category?.name?.toLowerCase() || p.category) === "womens"));
     } catch (err) {
       console.error("Error fetching women products:", err);
       toast.error("Failed to load products");
@@ -112,7 +112,7 @@ function Women() {
                 {/* Product Info */}
                 <div className="p-4">
                   <h3 className="font-bold text-lg truncate">{product.name}</h3>
-                  <p className="text-sm text-gray-600 truncate">{product.brand}</p>
+                  <p className="text-sm text-gray-600 truncate">{product.brand?.name || product.brand}</p>
                   <p className="font-bold text-xl mt-2">₹{product.price}</p>
 
                   <div className="flex gap-2 mt-4">
