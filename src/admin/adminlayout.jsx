@@ -1,27 +1,14 @@
 
-import { useEffect } from "react";
-import { Outlet, Navigate, useNavigate, useLocation } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 import AdminSidebar from "./adminsidebar";
+import { useAuth } from "../context/auth";
 import { toast } from "react-hot-toast";
 
 export default function AdminLayout() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const { user } = useAuth();
 
-  useEffect(() => {
-    const checkAuth = () => {
-      const token = localStorage.getItem("adminToken");
-      if (!token && location.pathname !== "/adminlogin") {
-        navigate("/adminlogin", { replace: true });
-        toast.error("Please login to continue");
-      }
-    };
-
-    checkAuth();
-  }, [navigate, location]);
-
-  const token = localStorage.getItem("adminToken");
-  if (!token) {
+  // If user is not logged in or is not staff, redirect to adminlogin
+  if (!user || !user.is_staff) {
     return <Navigate to="/adminlogin" replace />;
   }
 

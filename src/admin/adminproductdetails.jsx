@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-
+import api from "../utils/api";
 export default function AdminProductDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -14,11 +14,7 @@ export default function AdminProductDetails() {
   const fetchProductDetails = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:3000/products/${id}`);
-      if (!res.ok) {
-        throw new Error("Product not found");
-      }
-      const data = await res.json();
+      const data = await api.get(`/api/admin/products/${id}/`);
       setProduct(data);
     } catch (error) {
       console.error("Error fetching product:", error);

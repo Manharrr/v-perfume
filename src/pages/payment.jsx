@@ -88,36 +88,32 @@ function Payment() {
     try {
       // Create order data
       const orderData = {
-        items: items.map(item => ({
-          productId: item.productId || item.id,
-          name: item.name,
-          price: item.price,
-          image: item.image,
-          brand: item.brand || "Unknown",
-          quantity: item.quantity
-        })),
-        totalAmount: total,
         shippingAddress: `${form.address}, ${form.city}, ${form.state} - ${form.pincode}`,
         paymentMethod: paymentMethod === "cod" ? "Cash on Delivery" : "UPI",
         phone: form.mobile,
-        customerName: form.name,
-        paymentDetails: paymentMethod === "upi" ? { upiId } : {}
+        customerName: form.name
       };
 
       // Create order using context
-      const order = await createOrder(orderData);
+      const isBuyNow = !!buyNowProduct;
+      const order = await createOrder(orderData, isBuyNow, buyNowProduct);
 
-      if (order) {
-        // Clear cart if not buy now
-        if (!buyNowProduct) {
-          await clearCart();
-        }
-
+      if (order && order.data && order.data.order_id) {
         toast.dismiss(toastId);
         toast.success("Order placed successfully!");
 
         // Navigate to order details
-        navigate(`/order/${order.id}`);
+        navigate(`/order/${order.data.order_id}`);
+      } else if (order && order.order_id) { // In case response structure is direct
+        toast.dismiss(toastId);
+        toast.success("Order placed successfully!");
+
+        // Navigate to order details
+        navigate(`/order/${order.order_id}`);
+      } else {
+        toast.dismiss(toastId);
+        toast.success("Order placed successfully!");
+        navigate("/order");
       }
     } catch (error) {
       toast.dismiss(toastId);

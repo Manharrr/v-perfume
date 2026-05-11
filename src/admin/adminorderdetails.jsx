@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import {api} from "../../api/Axios";
-
+import api from "../utils/api";
 export default function AdminOrderDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -15,24 +14,8 @@ export default function AdminOrderDetails() {
   const fetchOrderDetails = async () => {
     setLoading(true);
     try {
-      const users = await api.get("/users");
-      
-      let foundOrder = null;
-      
-      for (const user of users) {
-        if (user.orders) {
-          const userOrder = user.orders.find(o => o.id === id);
-          if (userOrder) {
-            foundOrder = {
-              ...userOrder,
-              userName: user.username || user.email,
-              userEmail: user.email,
-              userId: user.id
-            };
-            break;
-          }
-        }
-      }
+      const orders = await api.get("/api/admin/orders/");
+      const foundOrder = orders.find(o => String(o.id) === String(id));
       
       if (!foundOrder) {
         alert("Order not found");
@@ -51,25 +34,9 @@ export default function AdminOrderDetails() {
 
   const updateStatus = async (newStatus) => {
     try {
-      const users = await api.get("/users");
-      
-      for (const user of users) {
-        if (user.orders) {
-          const orderIndex = user.orders.findIndex(o => o.id === id);
-          if (orderIndex !== -1) {
-            const updatedOrders = [...user.orders];
-            updatedOrders[orderIndex] = {
-              ...updatedOrders[orderIndex],
-              status: newStatus
-            };
-            
-            await api.patch(`/users/${user.id}`, { orders: updatedOrders });
-            setOrder(prev => ({ ...prev, status: newStatus }));
-            alert(`Status updated to ${newStatus}`);
-            break;
-          }
-        }
-      }
+      await api.patch(`/api/admin/orders/${id}/update/`, { status: newStatus });
+      setOrder(prev => ({ ...prev, status: newStatus }));
+      alert(`Status updated to ${newStatus}`);
     } catch (error) {
       console.error("Error:", error);
       alert("Update failed");
@@ -134,11 +101,11 @@ export default function AdminOrderDetails() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <p className="text-gray-400 text-sm">Customer Name</p>
-                <p className="font-medium">{order.userName}</p>
+                <p className="font-medium">{order.user_email || "Customer"}</p>
               </div>
               <div>
                 <p className="text-gray-400 text-sm">Email</p>
-                <p className="font-medium">{order.userEmail}</p>
+                <p className="font-medium">{order.user_email}</p>
               </div>
               <div>
                 <p className="text-gray-400 text-sm">Order Date</p>
@@ -174,13 +141,12 @@ export default function AdminOrderDetails() {
               {order.items?.map((item, index) => (
                 <div key={index} className="flex items-center gap-4 border-b border-neutral-800 pb-4">
                   <img
-                    src={item.image}
-                    alt={item.name}
+                    src={item.image || "https://placehold.co/80x80/1e1e1e/ffffff?text=No+Image"}
+                    alt={item.perfume_name || "Product"}
                     className="w-20 h-20 object-cover rounded"
                   />
                   <div className="flex-grow">
-                    <p className="font-medium">{item.name}</p>
-                    <p className="text-sm text-gray-400">{item.brand}</p>
+                    <p className="font-medium">{item.perfume_name}</p>
                     <p className="text-sm">Quantity: {item.quantity}</p>
                   </div>
                   <div className="text-right">

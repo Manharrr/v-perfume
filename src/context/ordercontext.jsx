@@ -1,129 +1,75 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import api from "../../api/Axios";
+import api from "../utils/api";
+
 const OrderContext = createContext();
 
 export function OrderProvider({ children }) {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // Get logged-in user from localStorage
-  const getUser = () => {
-    const user = localStorage.getItem("user");
-    return user ? JSON.parse(user) : null;
-  };
-
   // 🔹 Fetch user's orders
   const fetchOrders = async () => {
-    const user = getUser();
-    if (!user) {
-      setOrders([]);
-      return;
-    }
-
     try {
       setLoading(true);
-      const userData = await api.get(`/users/${user.id}`);
-      // Ensure orders is an array, sort by latest first
-      const userOrders = userData.orders || [];
-      const sortedOrders = userOrders.sort((a, b) => 
-        new Date(b.orderDate || b.createdAt) - new Date(a.orderDate || a.createdAt)
-      );
-      setOrders(sortedOrders);
+      const response = await api.get('/api/orders/history/');
+      setOrders(response || []);
     } catch (error) {
-      console.error("Error fetching orders:", error);
-      toast.error("Failed to load orders");
+      if (error.response?.status !== 401) {
+        console.error("Error fetching orders:", error);
+      }
+      setOrders([]);
     } finally {
       setLoading(false);
     }
   };
 
   // 🔹 Create new order 
-  const createOrder = async (orderData) => {
-    const user = getUser();
-    if (!user) {
-      toast.error("Please login to place order");
-      return null;
-    }
-
+  const createOrder = async (orderData, isBuyNow = false, buyNowProduct = null) => {
     try {
-      // Get current user data
-      const userData = await api.get(`/users/${user.id}`);
-      const userOrders = userData.orders || [];
-      
-      // Create new order with unique ID
-      const newOrder = {
-        id: Date.now().toString(), // Unique ID
-        orderId: `ORD${Date.now().toString().slice(-6)}`, // Shorter order ID
-        ...orderData,
-        userId: user.id,
-        username: user.username || user.email,
-        email: user.email,
-        orderDate: new Date().toISOString(),
-        status: "Pending",
-        // Add tracking info
-        trackingId: `TRK${Date.now().toString().slice(-8)}`,
-        estimatedDelivery: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString() // 7 days from now
-      };
+      let response;
+      if (isBuyNow && buyNowProduct) {
+        response = await api.post('/api/orders/buy-now/', {
+          perfume: buyNowProduct.productId || buyNowProduct.id,
+          quantity: buyNowProduct.quantity || 1,
+          address: orderData.shippingAddress,
+          payment_method: orderData.paymentMethod === "Cash on Delivery" ? "COD" : "UPI"
+        });
+      } else {
+        response = await api.post('/api/orders/create/', {
+          address: orderData.shippingAddress,
+          payment_method: orderData.paymentMethod === "Cash on Delivery" ? "COD" : "UPI"
+        });
+      }
 
-      // ADD the new order to existing orders (not replace)
-      const updatedOrders = [...userOrders, newOrder];
-      
-      // Update user in DB with ALL orders
-      await api.patch(`/users/${user.id}`, { 
-        orders: updatedOrders 
-      });
-      
-      // Update local state
-      setOrders(updatedOrders);
-      toast.success("Order placed successfully! ");
-      
-      return newOrder;
+      await fetchOrders(); // Refresh orders
+      toast.success("Order placed successfully!");
+      return response; // Contains order_id
     } catch (error) {
       console.error("Error creating order:", error);
-      toast.error("Failed to place order");
+      toast.error(error.response?.data?.error || "Failed to place order");
       return null;
     }
   };
 
   // 🔹 Get single order by ID (user-specific)
   const getOrderById = async (orderId) => {
-    const user = getUser();
-    if (!user) return null;
-
-    try {
-      const userData = await api.get(`/users/${user.id}`);
-      const userOrders = userData.orders || [];
-      const order = userOrders.find(order => order.id === orderId);
-      return order || null;
-    } catch (error) {
-      console.error("Error fetching order:", error);
-      toast.error("Failed to fetch order details");
-      return null;
-    }
+    // We can rely on local state or fetch from backend if available.
+    // Assuming history returns full details
+    const order = orders.find(order => String(order.id) === String(orderId));
+    return order || null;
   };
 
   // 🔹 Cancel order
   const cancelOrder = async (orderId) => {
-    const user = getUser();
-    if (!user) return false;
-
     try {
-      const userData = await api.get(`/users/${user.id}`);
-      const userOrders = userData.orders || [];
-      
-      const updatedOrders = userOrders.map(order => 
-        order.id === orderId ? { ...order, status: "Cancelled" } : order
-      );
-      
-      await api.patch(`/users/${user.id}`, { orders: updatedOrders });
-      
+      await api.post(`/api/orders/cancel/${orderId}/`);
       toast.success("Order cancelled successfully");
-      setOrders(updatedOrders);
+      await fetchOrders();
       return true;
     } catch (error) {
       console.error("Error cancelling order:", error);
-      toast.error("Failed to cancel order");
+      toast.error(error.response?.data?.error || "Failed to cancel order");
       return false;
     }
   };
@@ -133,11 +79,14 @@ export function OrderProvider({ children }) {
 
   // 🔹 Get total spent
   const getTotalSpent = () => {
-    return orders.reduce((total, order) => total + (order.totalAmount || 0), 0);
+    return orders.reduce((total, order) => total + (Number(order.total_amount) || 0), 0);
   };
 
   useEffect(() => {
-    fetchOrders();
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      fetchOrders();
+    }
   }, []);
 
   return (

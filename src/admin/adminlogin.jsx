@@ -2,12 +2,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import api from "../../api/Axios";
+import { useAuth } from "../context/auth";
+import { authService } from "../services/authService";
 
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -21,30 +23,17 @@ export default function AdminLogin() {
     setLoading(true);
 //fetch
     try {
-      const admins = await api.get(`/admins?email=${email}`);
+      const user = await authService.login(email, password);
       
-      if (admins.length === 0) {
-        toast.error("No admin found with this email");
+      if (!user.is_staff) {
+        authService.logout();
+        toast.error("You are not authorized as an admin");
         setLoading(false);
         return;
       }
-
-      const admin = admins[0];
       
-      if (admin.password !== password) {
-        toast.error("Invalid password");
-        setLoading(false);
-        return;
-      }
-
-      
-      localStorage.setItem("adminToken", "authenticated");
-      localStorage.setItem("adminEmail", admin.email);
-      localStorage.setItem("adminName", admin.name);
-      localStorage.setItem("adminId", admin.id);
-      
+      login(user);
       toast.success("Login successful!");
-      
       
       setTimeout(() => {
         navigate("/admin", { replace: true });
@@ -52,7 +41,7 @@ export default function AdminLogin() {
 
     } catch (error) {
       console.error("Login error:", error);
-      toast.error("Login failed. Please try again.");
+      toast.error(error.message || "Login failed. Please try again.");
     } finally {
       setLoading(false);
     }

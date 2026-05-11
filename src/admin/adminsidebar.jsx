@@ -8,21 +8,17 @@ import {
   ArrowLeftOnRectangleIcon,
   ChartBarIcon
 } from "@heroicons/react/24/outline";
+import { useAuth } from "../context/auth";
 
 export default function AdminSidebar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const adminName = localStorage.getItem("adminName") || "Admin";
+  const { user, logout } = useAuth();
+  const adminName = user?.name || "Admin";
 
   const handleLogout = () => {
-    // Clear all admin-related localStorage
-    localStorage.removeItem("adminToken");
-    localStorage.removeItem("adminEmail");
-    localStorage.removeItem("adminName");
-    
+    logout();
     toast.success("Logged out successfully");
-    
-    // Redirect to login with replace
     navigate("/adminlogin", { replace: true });
   };
 

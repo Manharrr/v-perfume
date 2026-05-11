@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import {api} from "../../api/Axios"; // Updated import
+import api from "../utils/api";
 
 const CartContext = createContext(null);
 
@@ -8,28 +8,27 @@ export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Get logged-in user from localStorage
-  const getUser = () => {
-    const user = localStorage.getItem("user");
-    return user ? JSON.parse(user) : null;
-  };
-
-  // 🔹 Fetch cart from user's cart array
+  // 🔹 Fetch cart from backend
   const fetchCart = async () => {
-    const user = getUser();
-    if (!user) {
-      setCart([]);
-      setLoading(false);
-      return;
-    }
-
     try {
       setLoading(true);
-      const userData = await api.get(`/users/${user.id}`);
-      setCart(userData.cart || []);
+      const response = await api.get('/api/cart/view/');
+      // Map Django response to frontend expected format
+      const formattedCart = (response.items || []).map(item => ({
+        id: item.id,
+        productId: item.perfume,
+        name: item.product_name,
+        price: item.product_price,
+        image: item.product_image,
+        quantity: item.quantity,
+        brand: "Premium Brand" // Default fallback
+      }));
+      setCart(formattedCart);
     } catch (err) {
-      console.error("Error fetching cart:", err);
-      toast.error("Failed to load cart");
+      if (err.response?.status !== 401) {
+        console.error("Error fetching cart:", err);
+      }
+      setCart([]);
     } finally {
       setLoading(false);
     }
@@ -37,67 +36,29 @@ export function CartProvider({ children }) {
 
   // 🔹 Add to cart
   const addToCart = async (product, quantity = 1) => {
-    const user = getUser();
-    if (!user) {
-      toast.error("Please login to add to cart");
-      return false;
-    }
-
     try {
-      const userData = await api.get(`/users/${user.id}`);
-      const userCart = userData.cart || [];
-      
-      // Check if product already exists
-      const existingIndex = userCart.findIndex(item => item.productId === product.id);
-      
-      let updatedCart;
-      if (existingIndex >= 0) {
-        // Update quantity
-        updatedCart = [...userCart];
-        updatedCart[existingIndex] = {
-          ...updatedCart[existingIndex],
-          quantity: updatedCart[existingIndex].quantity + quantity,
-          price: product.price
-        };
-      } else {
-        // Add new item
-        const newItem = {
-          id: Date.now().toString(),
-          productId: product.id,
-          name: product.name,
-          price: product.price,
-          image: product.image,
-          brand: product.brand || "Unknown",
-          quantity: quantity,
-          addedAt: new Date().toISOString()
-        };
-        updatedCart = [...userCart, newItem];
-      }
-
-      // Update user's cart
-      await api.patch(`/users/${user.id}`, { cart: updatedCart });
-      
-      setCart(updatedCart);
+      await api.post('/api/cart/add/', {
+        perfume: product.id,
+        quantity: quantity
+      });
+      await fetchCart(); // Refresh cart from server
       toast.success("Added to cart");
       return true;
     } catch (error) {
-      console.error("Error adding to cart:", error);
-      toast.error("Failed to add to cart");
+      if (error.response?.status === 401) {
+        toast.error("Please login to add to cart");
+      } else {
+        toast.error(error.response?.data?.error || "Failed to add to cart");
+      }
       return false;
     }
   };
 
   // 🔹 Remove from cart
   const removeFromCart = async (cartItemId) => {
-    const user = getUser();
-    if (!user) return;
-
     try {
-      const userData = await api.get(`/users/${user.id}`);
-      const updatedCart = (userData.cart || []).filter(item => item.id !== cartItemId);
-      
-      await api.patch(`/users/${user.id}`, { cart: updatedCart });
-      setCart(updatedCart);
+      await api.delete(`/api/cart/delete/${cartItemId}/`);
+      setCart(cart.filter(item => item.id !== cartItemId));
       toast.success("Removed from cart");
     } catch (error) {
       console.error("Error removing from cart:", error);
@@ -107,30 +68,21 @@ export function CartProvider({ children }) {
 
   // 🔹 Update quantity
   const updateQuantity = async (cartItemId, quantity) => {
-    const user = getUser();
-    if (!user) return;
-
     try {
-      const userData = await api.get(`/users/${user.id}`);
-      const updatedCart = (userData.cart || []).map(item => 
-        item.id === cartItemId ? { ...item, quantity: Math.max(1, quantity) } : item
-      );
-      
-      await api.patch(`/users/${user.id}`, { cart: updatedCart });
-      setCart(updatedCart);
+      await api.put(`/api/cart/update/${cartItemId}/`, {
+        quantity: Math.max(1, quantity)
+      });
+      await fetchCart(); // Refresh cart to get updated subtotal/total
     } catch (error) {
       console.error("Error updating quantity:", error);
-      toast.error("Failed to update quantity");
+      toast.error(error.response?.data?.error || "Failed to update quantity");
     }
   };
 
   // 🔹 Clear cart (after payment)
   const clearCart = async () => {
-    const user = getUser();
-    if (!user) return;
-
     try {
-      await api.patch(`/users/${user.id}`, { cart: [] });
+      await api.delete('/api/cart/clear/');
       setCart([]);
     } catch (error) {
       console.error("Error clearing cart:", error);
@@ -144,7 +96,12 @@ export function CartProvider({ children }) {
   };
 
   useEffect(() => {
-    fetchCart();
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      fetchCart();
+    } else {
+      setLoading(false);
+    }
   }, []);
 
   return (

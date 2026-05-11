@@ -6,6 +6,7 @@ import {
   ShoppingBagIcon,
   NoSymbolIcon
 } from "@heroicons/react/24/outline";
+import api from "../utils/api";
 
 export default function Analytics() {
   const [stats, setStats] = useState({
@@ -24,38 +25,15 @@ export default function Analytics() {
   const fetchStats = async () => {
     setLoading(true);
     try {
-      const [usersRes, productsRes] = await Promise.all([
-        fetch("http://localhost:3000/users"),
-        fetch("http://localhost:3000/products")
-      ]);
-      
-      const users = await usersRes.json();
-      const products = await productsRes.json();
-
-      // Calculate stats
-      let totalRevenue = 0;
-      let totalOrders = 0;
-      
-      users.forEach(user => {
-        if (user.orders && Array.isArray(user.orders)) {
-          totalOrders += user.orders.length;//count ttl order
-          user.orders.forEach(order => {//ttl amount
-            if (order.totalAmount) {
-              totalRevenue += order.totalAmount;
-            }
-          });
-        }
-      });
-
-      const regularUsers = users.filter(user => user.role !== "admin");
-      const blockedUsers = regularUsers.filter(user => user.status === "blocked").length;
+      const dashboardData = await api.get("/api/admin/dashboard/");
+      const productsData = await api.get("/api/admin/products/");
 
       setStats({
-        totalRevenue,
-        totalProducts: products.length,
-        totalUsers: regularUsers.length,
-        blockedUsers,
-        totalOrders
+        totalRevenue: dashboardData.total_revenue || 0,
+        totalProducts: productsData.length || 0,
+        totalUsers: dashboardData.total_users || 0,
+        blockedUsers: 0, // Would require another API call or a specific field, defaulting to 0 for now
+        totalOrders: dashboardData.total_orders || 0
       });
 
     } catch (error) {

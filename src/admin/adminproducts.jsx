@@ -334,6 +334,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import api from "../utils/api";
 
 export default function AdminProducts() {
   const [products, setProducts] = useState([]);
@@ -359,8 +360,7 @@ export default function AdminProducts() {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:3000/products");
-      const data = await res.json();
+      const data = await api.get("/api/admin/products/");
       setProducts(data);
     } catch {
       toast.error("Failed to load products");
@@ -379,9 +379,7 @@ export default function AdminProducts() {
     if (!window.confirm("Delete this product?")) return;
 
     try {
-      await fetch(`http://localhost:3000/products/${String(id)}`, {
-        method: "DELETE"
-      });
+      await api.patch(`/api/admin/products/${String(id)}/delete/`);
 
       setProducts(products.filter(p => String(p.id) !== String(id)));
       toast.success("Product deleted");
@@ -409,14 +407,7 @@ export default function AdminProducts() {
 
     try {
       if (editingProduct) {
-        await fetch(
-          `http://localhost:3000/products/${String(editingProduct.id)}`,
-          {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(productData)
-          }
-        );
+        await api.patch(`/api/admin/products/${String(editingProduct.id)}/edit/`, productData);
 
         setProducts(products.map(p =>
           String(p.id) === String(editingProduct.id)
@@ -426,16 +417,7 @@ export default function AdminProducts() {
 
         toast.success("Product updated");
       } else {
-        const res = await fetch("http://localhost:3000/products", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            ...productData,
-            id: Date.now().toString()
-          })
-        });
-
-        const newProduct = await res.json();
+        const newProduct = await api.post("/api/admin/products/add/", productData);
         setProducts([...products, newProduct]);
         toast.success("Product added");
       }
@@ -463,7 +445,7 @@ export default function AdminProducts() {
     setEditingProduct(product);
     setFormData({
       name: product.name,
-      brand: product.brand || "",
+      brand: product.brand?.name || product.brand || "",
       price: product.price.toString(),
       inStock: product.stock > 0,
       description: product.description || "",

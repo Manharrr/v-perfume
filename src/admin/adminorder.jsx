@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../../api/Axios";
+import api from "../utils/api";
 
 export default function AdminOrders() {
   const [orders, setOrders] = useState([]);
@@ -16,26 +16,8 @@ export default function AdminOrders() {
   const fetchAllOrders = async () => {
     setLoading(true);
     try {
-      const users = await api.get("/users");
-      
-      let allOrders = [];
-      users.forEach(user => {
-        if (user.orders) {
-          allOrders = [...allOrders, ...user.orders.map(order => ({//Old orders + current user orders
-            ...order,
-            userName: user.username || user.email,//extra info add
-            userEmail: user.email,
-            userId: user.id
-          }))];
-        }
-      });
-
-      // Sort newest first
-      allOrders.sort((a, b) => 
-        new Date(b.orderDate || b.createdAt) - new Date(a.orderDate || a.createdAt)
-      );
-      
-      setOrders(allOrders);
+      const data = await api.get("/api/admin/orders/");
+      setOrders(data || []);
     } catch (error) {
       console.error("Error:", error);
     } finally {
@@ -49,29 +31,11 @@ export default function AdminOrders() {
 
   const updateOrderStatus = async (orderId, newStatus) => {
     try {
-      const users = await api.get("/users");
-      
-      for (const user of users) {
-        if (user.orders) {
-          const orderIndex = user.orders.findIndex(o => o.id === orderId);
-          if (orderIndex !== -1) {
-            const updatedOrders = [...user.orders];
-            updatedOrders[orderIndex] = {
-              ...updatedOrders[orderIndex],
-              status: newStatus
-            };
-            
-            await api.patch(`/users/${user.id}`, { orders: updatedOrders });
-            
-            setOrders(prev => prev.map(order => 
-              order.id === orderId ? { ...order, status: newStatus } : order
-            ));
-            
-            alert(`Status updated to ${newStatus}`);
-            break;
-          }
-        }
-      }
+      await api.patch(`/api/admin/orders/${orderId}/update/`, { status: newStatus });
+      setOrders(prev => prev.map(order => 
+        order.id === orderId ? { ...order, status: newStatus } : order
+      ));
+      alert(`Status updated to ${newStatus}`);
     } catch (error) {
       console.error("Error updating:", error);
       alert("Update failed");
@@ -168,8 +132,7 @@ export default function AdminOrders() {
                     </td>
                     <td className="p-4">
                       <div>
-                        <p className="font-medium">{order.userName}</p>
-                        <p className="text-sm text-gray-400">{order.userEmail}</p>
+                        <p className="font-medium">{order.user_email || "Customer"}</p>
                       </div>
                     </td>
                     <td className="p-4 text-gray-400">

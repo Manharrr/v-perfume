@@ -7,7 +7,7 @@ import { useCart } from "../context/cartcontext";
 import { useWishlist } from "../context/wishlistcontext";
 import { useAuth } from "../context/auth";
 import toast from "react-hot-toast";
-import { api } from "../../api/Axios";
+import api from "../utils/api";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -28,7 +28,7 @@ export default function Products() {
     try {
       setLoading(true);
       setError(null);
-      const response = await api.get("/products");
+      const response = await api.get("/api/products/perfumes/");
       
       // Check if response is valid
       if (response && Array.isArray(response)) {
@@ -97,7 +97,7 @@ export default function Products() {
     if (!item) return false;
     
     const name = item.name || "";
-    const brand = item.brand || "";
+    const brand = item.brand?.name || item.brand || "";
     const searchTerm = search.toLowerCase();
     
     return (
@@ -208,7 +208,7 @@ export default function Products() {
 
                 <div className="p-4">
                   <h3 className="font-bold">{product?.name || "Unknown Product"}</h3>
-                  <p className="text-sm text-gray-600">{product?.brand || "Unknown Brand"}</p>
+                  <p className="text-sm text-gray-600">{product?.brand?.name || product?.brand || "Unknown Brand"}</p>
                   <p className="font-bold text-lg mt-2">₹{product?.price || 0}</p>
 
                   <div className="flex gap-2 mt-4">

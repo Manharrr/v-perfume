@@ -1,13 +1,12 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-
+import api from "../utils/api";
 export default function UserDetails() {
   const { id } = useParams();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/users/${id}`)
-      .then(res => res.json())
+    api.get(`/api/admin/users/${id}/`)
       .then(data => setUser(data));
   }, [id]);
 

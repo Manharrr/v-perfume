@@ -7,7 +7,7 @@ import { useCart } from "../context/cartcontext";
 import { useWishlist } from "../context/wishlistcontext";
 import { useAuth } from "../context/auth";
 import toast from "react-hot-toast";
-import {api} from "../../api/Axios";
+import { api } from "../utils/api";
 
 function Men() {
   const [products, setProducts] = useState([]);
@@ -24,9 +24,9 @@ function Men() {
 
   const fetchMenProducts = async () => {
     try {
-      const data = await api.get("/products"); // Using axios
+      const data = await api.get("/api/products/perfumes/"); // Using axios
       const mensProducts = data.filter(
-        (p) => Number(p.id) >= 2 && Number(p.id) <= 12
+        (p) => (p.category?.name?.toLowerCase() || p.category) === "men" || (p.category?.name?.toLowerCase() || p.category) === "mens"
       );
       setProducts(mensProducts);
     } catch (err) {
@@ -115,7 +115,7 @@ function Men() {
                 {/* Product Info */}
                 <div className="p-4">
                   <h3 className="font-bold text-lg truncate">{product.name}</h3>
-                  <p className="text-sm text-gray-600 truncate">{product.brand}</p>
+                  <p className="text-sm text-gray-600 truncate">{product.brand?.name || product.brand}</p>
                   <p className="font-bold text-xl mt-2">₹{product.price}</p>
 
                   <div className="flex gap-2 mt-4">

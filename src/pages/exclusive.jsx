@@ -7,7 +7,7 @@ import { useCart } from "../context/cartcontext";
 import { useWishlist } from "../context/wishlistcontext";
 import { useAuth } from "../context/auth";
 import toast from "react-hot-toast";
-import api from "../../api/Axios";
+import { api } from "../utils/api";
 
 function Exclusive() {
   const [products, setProducts] = useState([]);
@@ -24,8 +24,8 @@ function Exclusive() {
 
   const fetchExclusiveProducts = async () => {
     try {
-      const data = await api.get("/products"); // Using axios
-      setProducts(data.slice(16, 24));
+      const data = await api.get("/api/products/perfumes/"); // Using axios
+      setProducts(data.filter((p) => p.isExclusive === true));
     } catch (err) {
       console.error("Error fetching exclusive products:", err);
       toast.error("Failed to load products");
@@ -140,7 +140,7 @@ function Exclusive() {
                   {/* Product Info */}
                   <div className="p-4">
                     <h3 className="font-bold text-lg truncate">{product.name}</h3>
-                    <p className="text-sm text-gray-600 truncate">{product.brand}</p>
+                    <p className="text-sm text-gray-600 truncate">{product.brand?.name || product.brand}</p>
                     <div className="flex items-center justify-between mt-2">
                       <p className="font-bold text-xl">₹{product.price}</p>
                       <span className="text-xs text-gray-500">Premium</span>

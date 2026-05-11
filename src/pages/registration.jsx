@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
-import { api } from "../../api/Axios";
+import api from "../utils/api";
+import { authService } from "../services/authService";
+import { useAuth } from "../context/auth";
 
 function Registration() {
   const [formData, setFormData] = useState({
@@ -11,6 +13,7 @@ function Registration() {
     confirmPassword: ""
   });
   const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -21,7 +24,8 @@ function Registration() {
     if (!formData.username.trim()) return "Username is required";
     if (formData.username.trim().length < 3)
       return "Username must be at least 3 characters";
-    if (!/\S+@\S+\.\S+/.test(formData.email))
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email))
       return "Please enter a valid email";
     if (!formData.password) return "Password is required";
     if (formData.password.length < 6)
@@ -29,16 +33,6 @@ function Registration() {
     if (formData.password !== formData.confirmPassword)
       return "Passwords do not match";
     return null;
-  };
-
-  const checkExistingUser = async (email) => {
-    try {
-      const res = await api.get("/users");
-      return res.data.some(user => user.email === email);
-    } catch (error) {
-      console.error(error);
-      return false;
-    }
   };
 
   const handleSubmit = async (e) => {
@@ -53,43 +47,28 @@ function Registration() {
     setLoading(true);
 
     try {
-      const exists = await checkExistingUser(formData.email);
-      if (exists) {
-        toast.error("User with this email already exists");
-        setLoading(false);
-        return;
-      }
-
       const newUser = {
-        id: Date.now().toString(),
-        username: formData.username,
+        name: formData.username,
         email: formData.email,
         password: formData.password,
-        role: "user",
-        status: "active",
-        createdAt: new Date().toISOString(),
-        cart: [],
-        wishlist: [],
-        orders: []
       };
 
-      await api.post("/users", newUser);
+      await api.post("/api/users/register/", newUser);
 
       toast.success("Registration successful!");
 
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          id: newUser.id,
-          username: newUser.username,
-          email: newUser.email
-        })
-      );
+      // Log the user in with the newly created credentials
+      const user = await authService.login(formData.email, formData.password);
+      login(user);
 
       navigate("/");
     } catch (error) {
       console.error(error);
-      toast.error("Registration failed");
+      if (error.response && error.response.data) {
+        toast.error(error.response.data.detail || error.response.data.message || "Registration failed");
+      } else {
+        toast.error("Registration failed");
+      }
     } finally {
       setLoading(false);
     }

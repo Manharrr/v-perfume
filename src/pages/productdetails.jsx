@@ -5,7 +5,7 @@ import Footer from "../components/footer";
 import { useCart } from "../context/cartcontext";
 import { useAuth } from "../context/auth";
 import toast from "react-hot-toast";
-import { api } from "../../api/Axios";
+import api from "../utils/api";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -30,7 +30,7 @@ function ProductDetails() {
     try {
       setLoading(true);
       setError(null);
-      const response = await api.get(`/products/${id}`);
+      const response = await api.get(`/api/products/perfumes/${id}/`);
       
       if (response && typeof response === 'object') {
         setProduct(response);
@@ -152,7 +152,7 @@ function ProductDetails() {
 
           <div>
             <h1 className="text-4xl font-bold">{product?.name || "Unknown Product"}</h1>
-            <p className="text-gray-600">{product?.brand || "Unknown Brand"}</p>
+            <p className="text-gray-600">{product?.brand?.name || product?.brand || "Unknown Brand"}</p>
             <p className="text-3xl font-bold mt-4">₹{product?.price || 0}</p>
 
             {product?.description && (
