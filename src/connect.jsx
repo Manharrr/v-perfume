@@ -16,7 +16,6 @@ import OrderDetails from "./pages/orderdetails";
 import NotFound from "./pages/notfound";
 
 import AdminLayout from "./admin/adminlayout";
-import AdminLogin from "./admin/adminlogin";
 import AdminDashboard from "./admin/admindash";
 import AdminProducts from "./admin/adminproducts";
 import AdminUsers from "./admin/adminuser";
@@ -49,8 +48,7 @@ export default function Connect() {
       <Route path="/order/:id" element={<ProtectedRoute><OrderDetails /></ProtectedRoute>} />
 
       
-      <Route path="/adminlogin" element={<AdminLogin />} />
-      
+
       <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
         <Route index element={<AdminDashboard />} />
         <Route path="products" element={<AdminProducts />} />

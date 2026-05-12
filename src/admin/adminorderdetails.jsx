@@ -81,14 +81,15 @@ export default function AdminOrderDetails() {
         
         <div className="flex gap-4">
           <select
-            value={order.status || 'Pending'}
+            value={order.status || 'PENDING'}
             onChange={(e) => updateStatus(e.target.value)}
             className="bg-neutral-800 border border-neutral-700 rounded px-4 py-2"
           >
-            <option value="Pending">Pending</option>
-            <option value="Shipped">Shipped</option>
-            <option value="Delivered">Delivered</option>
-            <option value="Cancelled">Cancelled</option>
+            <option value="PENDING">Pending</option>
+            <option value="PLACED">Placed</option>
+            <option value="SHIPPED">Shipped</option>
+            <option value="DELIVERED">Delivered</option>
+            <option value="CANCELLED">Cancelled</option>
           </select>
         </div>
       </div>
@@ -100,38 +101,37 @@ export default function AdminOrderDetails() {
             <h2 className="text-xl font-bold mb-4">Customer Information</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <p className="text-gray-400 text-sm">Customer Name</p>
+                <p className="text-gray-400 text-sm">Customer Email</p>
                 <p className="font-medium">{order.user_email || "Customer"}</p>
-              </div>
-              <div>
-                <p className="text-gray-400 text-sm">Email</p>
-                <p className="font-medium">{order.user_email}</p>
               </div>
               <div>
                 <p className="text-gray-400 text-sm">Order Date</p>
                 <p className="font-medium">
-                  {new Date(order.orderDate || order.createdAt).toLocaleString()}
+                  {new Date(order.orderDate || order.created_at).toLocaleString()}
                 </p>
               </div>
               <div>
                 <p className="text-gray-400 text-sm">Status</p>
                 <span className={`px-3 py-1 rounded-full text-sm ${
-                  order.status === 'Delivered' ? 'bg-green-400/20 text-green-400' :
-                  order.status === 'Shipped' ? 'bg-blue-400/20 text-blue-400' :
-                  order.status === 'Pending' ? 'bg-yellow-400/20 text-yellow-400' :
+                  order.status === 'DELIVERED' ? 'bg-green-400/20 text-green-400' :
+                  order.status === 'SHIPPED' ? 'bg-blue-400/20 text-blue-400' :
+                  order.status === 'PENDING' ? 'bg-yellow-400/20 text-yellow-400' :
+                  order.status === 'PLACED' ? 'bg-purple-400/20 text-purple-400' :
                   'bg-red-400/20 text-red-400'
                 }`}>
-                  {order.status || 'Pending'}
+                  {order.status || 'PENDING'}
                 </span>
+              </div>
+              <div>
+                <p className="text-gray-400 text-sm">Payment Method</p>
+                <p className="font-medium">{order.payment_method === 'COD' ? 'Cash on Delivery' : 'Online'}</p>
               </div>
             </div>
             
-            {order.shippingAddress && (
-              <div className="mt-4">
-                <p className="text-gray-400 text-sm">Shipping Address</p>
-                <p className="font-medium">{order.shippingAddress}</p>
-              </div>
-            )}
+            <div className="mt-4">
+              <p className="text-gray-400 text-sm">Shipping Address</p>
+              <p className="font-medium">{order.address || "No address provided"}</p>
+            </div>
           </div>
 
           {/* Order Items */}
@@ -141,12 +141,13 @@ export default function AdminOrderDetails() {
               {order.items?.map((item, index) => (
                 <div key={index} className="flex items-center gap-4 border-b border-neutral-800 pb-4">
                   <img
-                    src={item.image || "https://placehold.co/80x80/1e1e1e/ffffff?text=No+Image"}
+                    src={item.perfume_image || "https://placehold.co/80x80/1e1e1e/ffffff?text=No+Image"}
                     alt={item.perfume_name || "Product"}
                     className="w-20 h-20 object-cover rounded"
                   />
                   <div className="flex-grow">
                     <p className="font-medium">{item.perfume_name}</p>
+                    <p className="text-xs text-gray-500">{item.perfume_brand}</p>
                     <p className="text-sm">Quantity: {item.quantity}</p>
                   </div>
                   <div className="text-right">

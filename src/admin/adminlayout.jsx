@@ -7,9 +7,9 @@ import { toast } from "react-hot-toast";
 export default function AdminLayout() {
   const { user } = useAuth();
 
-  // If user is not logged in or is not staff, redirect to adminlogin
+  // If user is not logged in or is not staff, redirect to login
   if (!user || !user.is_staff) {
-    return <Navigate to="/adminlogin" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   return (

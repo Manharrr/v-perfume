@@ -21,7 +21,7 @@ export function CartProvider({ children }) {
         price: item.product_price,
         image: item.product_image,
         quantity: item.quantity,
-        brand: "Premium Brand" // Default fallback
+        brand: item.product_brand || "Premium Brand"
       }));
       setCart(formattedCart);
     } catch (err) {

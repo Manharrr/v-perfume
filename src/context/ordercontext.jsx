@@ -33,12 +33,12 @@ export function OrderProvider({ children }) {
           perfume: buyNowProduct.productId || buyNowProduct.id,
           quantity: buyNowProduct.quantity || 1,
           address: orderData.shippingAddress,
-          payment_method: orderData.paymentMethod === "Cash on Delivery" ? "COD" : "UPI"
+          payment_method: orderData.paymentMethod === "Cash on Delivery" ? "COD" : "ONLINE"
         });
       } else {
         response = await api.post('/api/orders/create/', {
           address: orderData.shippingAddress,
-          payment_method: orderData.paymentMethod === "Cash on Delivery" ? "COD" : "UPI"
+          payment_method: orderData.paymentMethod === "Cash on Delivery" ? "COD" : "ONLINE"
         });
       }
 

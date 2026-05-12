@@ -44,10 +44,11 @@ export default function AdminOrders() {
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'Delivered': return 'bg-green-400/20 text-green-400';
-      case 'Shipped': return 'bg-blue-400/20 text-blue-400';
-      case 'Pending': return 'bg-yellow-400/20 text-yellow-400';
-      case 'Cancelled': return 'bg-red-400/20 text-red-400';
+      case 'DELIVERED': return 'bg-green-400/20 text-green-400';
+      case 'SHIPPED': return 'bg-blue-400/20 text-blue-400';
+      case 'PENDING': return 'bg-yellow-400/20 text-yellow-400';
+      case 'PLACED': return 'bg-purple-400/20 text-purple-400';
+      case 'CANCELLED': return 'bg-red-400/20 text-red-400';
       default: return 'bg-gray-400/20 text-gray-400';
     }
   };
@@ -61,18 +62,17 @@ export default function AdminOrders() {
         </div>
         
         <div className="flex gap-4">
-         
-        
           <select 
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
             className="bg-neutral-800 border border-neutral-700 rounded-lg px-4 py-2"
           >
             <option value="all">All Orders</option>
-            <option value="Pending">Pending</option>
-            <option value="Shipped">Shipped</option>
-            <option value="Delivered">Delivered</option>
-            <option value="Cancelled">Cancelled</option>
+            <option value="PENDING">Pending</option>
+            <option value="PLACED">Placed</option>
+            <option value="SHIPPED">Shipped</option>
+            <option value="DELIVERED">Delivered</option>
+            <option value="CANCELLED">Cancelled</option>
           </select>
         </div>
       </div>
@@ -147,14 +147,15 @@ export default function AdminOrders() {
                     <td className="p-4">
                       <div className="flex gap-2">
                         <select
-                          value={order.status || 'Pending'}
+                          value={order.status || 'PENDING'}
                           onChange={(e) => updateOrderStatus(order.id, e.target.value)}
                           className="bg-neutral-800 border border-neutral-700 rounded px-2 py-1 text-sm"
                         >
-                          <option value="Pending">Pending</option>
-                          <option value="Shipped">Shipped</option>
-                          <option value="Delivered">Delivered</option>
-                          <option value="Cancelled">Cancelled</option>
+                          <option value="PENDING">Pending</option>
+                          <option value="PLACED">Placed</option>
+                          <option value="SHIPPED">Shipped</option>
+                          <option value="DELIVERED">Delivered</option>
+                          <option value="CANCELLED">Cancelled</option>
                         </select>
                         <button
                           onClick={() => navigate(`/admin/orders/${order.id}`)}

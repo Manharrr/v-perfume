@@ -19,7 +19,7 @@ export default function AdminSidebar() {
   const handleLogout = () => {
     logout();
     toast.success("Logged out successfully");
-    navigate("/adminlogin", { replace: true });
+    navigate("/login", { replace: true });
   };
 
   const navItems = [

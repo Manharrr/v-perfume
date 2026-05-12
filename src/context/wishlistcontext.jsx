@@ -20,7 +20,7 @@ export function WishlistProvider({ children }) {
         name: item.product_name || item.perfume_name,
         price: item.product_price || item.perfume_price,
         image: item.product_image || item.perfume_image,
-        brand: "Premium Brand" // Default fallback
+        brand: item.product_brand || "Premium Brand"
       }));
       setWishlist(formattedWishlist);
     } catch (error) {
