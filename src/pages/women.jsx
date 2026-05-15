@@ -7,7 +7,7 @@ import { useCart } from "../context/cartcontext";
 import { useWishlist } from "../context/wishlistcontext";
 import { useAuth } from "../context/auth";
 import toast from "react-hot-toast";
-import { api } from "../utils/api";
+import { api, getMediaUrl } from "../utils/api";
 
 function Women() {
   const [products, setProducts] = useState([]);
@@ -22,17 +22,21 @@ function Women() {
     fetchWomenProducts();
   }, []);
 
-  const fetchWomenProducts = async () => {
-    try {
-      const data = await api.get("/api/products/perfumes/"); // Using axios
-      setProducts(data.filter((p) => (p.category?.name?.toLowerCase() || p.category) === "women" || (p.category?.name?.toLowerCase() || p.category) === "womens"));
-    } catch (err) {
-      console.error("Error fetching women products:", err);
-      toast.error("Failed to load products");
-    } finally {
-      setLoading(false);
-    }
-  };
+ const fetchWomenProducts = async () => {
+  try {
+    const response = await api.get(
+      "/api/products/perfumes/?category=women"
+    );
+
+    setProducts(response);
+
+  } catch (err) {
+    console.error("Error fetching women products:", err);
+    toast.error("Failed to load products");
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleAddToCart = async (product, e) => {
     e.stopPropagation();
@@ -98,15 +102,15 @@ function Women() {
 
                 {/* Product Image */}
                 <div className="w-full aspect-[4/3] overflow-hidden">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = "https://via.placeholder.com/300x400?text=Perfume";
-                    }}
-                  />
+                    <img
+                      src={getMediaUrl(product.image)}
+                      alt={product.name}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "https://placehold.co/300x400?text=Womens+Perfume";
+                      }}
+                    />
                 </div>
 
                 {/* Product Info */}

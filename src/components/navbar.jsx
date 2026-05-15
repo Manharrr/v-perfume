@@ -187,6 +187,11 @@ function Navbar() {
           <li onClick={() => handleProtectedNav("/order", "Login to view orders")} className="cursor-pointer">
             Orders
           </li>
+          {user?.is_staff && (
+            <li onClick={() => navigate("/admin")} className="text-yellow-400 font-bold cursor-pointer">
+              Admin
+            </li>
+          )}
         </ul>
 
         <div className="hidden md:flex items-center gap-6">
@@ -240,6 +245,9 @@ function Navbar() {
             <li onClick={() => navigate("/")}>Home</li>
             <li onClick={() => navigate("/product")}>Shop</li>
             <li onClick={() => navigate("/about")}>About</li>
+            {user?.is_staff && (
+              <li onClick={() => navigate("/admin")} className="text-yellow-400 font-bold">Admin Panel</li>
+            )}
             <li onClick={() => handleProtectedNav("/cart", "Login to view cart")}>
               Cart ({cartCount})
             </li>

@@ -5,7 +5,7 @@ import Footer from "../components/footer";
 import { useCart } from "../context/cartcontext";
 import { useAuth } from "../context/auth";
 import toast from "react-hot-toast";
-import api from "../utils/api";
+import api, { getMediaUrl } from "../utils/api";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -141,12 +141,12 @@ function ProductDetails() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <img 
-            src={product?.image || "https://via.placeholder.com/600x600?text=No+Image"} 
+            src={getMediaUrl(product?.image)} 
             alt={product?.name || "Product"} 
             className="rounded-lg w-full h-auto"
             onError={(e) => {
               e.target.onerror = null;
-              e.target.src = "https://via.placeholder.com/600x600?text=No+Image";
+              e.target.src = "https://placehold.co/600x600?text=No+Image";
             }}
           />
 

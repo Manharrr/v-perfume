@@ -14,8 +14,14 @@ export default function AdminOrderDetails() {
   const fetchOrderDetails = async () => {
     setLoading(true);
     try {
-      const orders = await api.get("/api/admin/orders/");
-      const foundOrder = orders.find(o => String(o.id) === String(id));
+      // const orders = await api.get("/api/admin/orders/");
+      // const foundOrder = orders.find(o => String(o.id) === String(id));
+      const response = await api.get("/api/admin/orders/");
+      const orders = response.data;
+
+      const foundOrder = orders.find(
+      (o) => String(o.id) === String(id)
+      );
       
       if (!foundOrder) {
         alert("Order not found");
@@ -141,7 +147,12 @@ export default function AdminOrderDetails() {
               {order.items?.map((item, index) => (
                 <div key={index} className="flex items-center gap-4 border-b border-neutral-800 pb-4">
                   <img
-                    src={item.perfume_image || "https://placehold.co/80x80/1e1e1e/ffffff?text=No+Image"}
+                    // src={item.perfume_image || "https://placehold.co/80x80/1e1e1e/ffffff?text=No+Image"}
+                    src={
+                        item.perfume_image ||
+                        item.perfume?.image ||
+                        "https://placehold.co/80x80/1e1e1e/ffffff?text=No+Image"
+                         }
                     alt={item.perfume_name || "Product"}
                     className="w-20 h-20 object-cover rounded"
                   />
@@ -168,7 +179,7 @@ export default function AdminOrderDetails() {
             <div className="space-y-3">
               <div className="flex justify-between">
                 <span>Subtotal</span>
-                <span>₹{order.totalAmount}</span>
+                <span>₹{order.total_amount || order.total || 0}</span>
               </div>
               <div className="flex justify-between">
                 <span>Shipping</span>
@@ -181,7 +192,7 @@ export default function AdminOrderDetails() {
               <div className="border-t border-neutral-800 pt-3">
                 <div className="flex justify-between text-lg font-bold">
                   <span>Total</span>
-                  <span>₹{order.totalAmount}</span>
+                  <span>₹{order.total_amount}</span>
                 </div>
               </div>
             </div>

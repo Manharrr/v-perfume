@@ -6,9 +6,9 @@ const AdminRoute = ({ children }) => {
   const { user } = useAuth();
   const location = useLocation();
 
-  if (!user || user.role !== "admin") {
-    // Redirect non-admins to the home page or admin login
-    return <Navigate to="/adminlogin" state={{ from: location }} replace />;
+  if (!user || !user.is_staff) {
+    // Redirect non-admins to the home page or login
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
   return children;

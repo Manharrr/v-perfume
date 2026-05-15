@@ -33,7 +33,8 @@ export default function Analytics() {
         totalProducts: productsData.length || 0,
         totalUsers: dashboardData.total_users || 0,
         blockedUsers: 0, // Would require another API call or a specific field, defaulting to 0 for now
-        totalOrders: dashboardData.total_orders || 0
+        totalOrders: dashboardData.total_orders || 0,
+        blocked_users: dashboardData.blocked_users || 0  ,
       });
 
     } catch (error) {
@@ -64,7 +65,7 @@ export default function Analytics() {
     },
     {
       title: "Blocked Users",
-      value: stats.blockedUsers,
+      value: stats.blocked_users,
       icon: NoSymbolIcon,
       color: "text-red-400"
     },

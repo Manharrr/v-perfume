@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import api from "../utils/api";
-import { authService } from "../services/authService";
-import { useAuth } from "../context/auth";
+// import { authService } from "../services/authService";
+// import { useAuth } from "../context/auth";
 
 function Registration() {
   const [formData, setFormData] = useState({
@@ -13,7 +13,7 @@ function Registration() {
     confirmPassword: ""
   });
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  // const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -55,13 +55,17 @@ function Registration() {
 
       await api.post("/api/users/register/", newUser);
 
-      toast.success("Registration successful!");
+      toast.success("Registration successful! OTP sent to email");
+
+      navigate("/verify-otp");
 
       // Log the user in with the newly created credentials
-      const user = await authService.login(formData.email, formData.password);
-      login(user);
+      // const user = await authService.login(formData.email, formData.password);
+      // login(user);
 
-      navigate("/");
+      // navigate("/");
+
+
     } catch (error) {
       console.error(error);
       if (error.response && error.response.data) {

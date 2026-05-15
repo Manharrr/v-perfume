@@ -25,40 +25,83 @@ export function OrderProvider({ children }) {
   };
 
   // 🔹 Create new order 
-  const createOrder = async (orderData, isBuyNow = false, buyNowProduct = null) => {
-    try {
-      let response;
-      if (isBuyNow && buyNowProduct) {
-        response = await api.post('/api/orders/buy-now/', {
-          perfume: buyNowProduct.productId || buyNowProduct.id,
-          quantity: buyNowProduct.quantity || 1,
-          address: orderData.shippingAddress,
-          payment_method: orderData.paymentMethod === "Cash on Delivery" ? "COD" : "ONLINE"
-        });
-      } else {
-        response = await api.post('/api/orders/create/', {
-          address: orderData.shippingAddress,
-          payment_method: orderData.paymentMethod === "Cash on Delivery" ? "COD" : "ONLINE"
-        });
-      }
 
-      await fetchOrders(); // Refresh orders
-      toast.success("Order placed successfully!");
-      return response; // Contains order_id
-    } catch (error) {
-      console.error("Error creating order:", error);
-      toast.error(error.response?.data?.error || "Failed to place order");
-      return null;
+  const createOrder = async (orderData, isBuyNow = false, buyNowProduct = null) => {
+  try {
+    let response;
+    if (isBuyNow && buyNowProduct) {
+      response = await api.post('/api/orders/buy-now/', {
+        perfume: buyNowProduct.productId || buyNowProduct.id,
+        quantity: buyNowProduct.quantity || 1,
+        address: orderData.shippingAddress,
+        payment_method: orderData.paymentMethod === "Cash on Delivery" ? "COD" : "ONLINE"
+      });
+    } else {
+      response = await api.post('/api/orders/create/', {
+        address: orderData.shippingAddress,
+        payment_method: orderData.paymentMethod === "Cash on Delivery" ? "COD" : "ONLINE"
+      });
     }
-  };
+
+    await fetchOrders();
+    //toast.success remove cheythu — Payment.jsx handle cheyyum
+    return response;
+  } catch (error) {
+    console.error("Error creating order:", error);
+    toast.error(error.response?.data?.error || "Failed to place order");
+    return null;
+  }
+};
+  // const createOrder = async (orderData, isBuyNow = false, buyNowProduct = null) => {
+  //   try {
+  //     let response;
+  //     if (isBuyNow && buyNowProduct) {
+  //       response = await api.post('/api/orders/buy-now/', {
+  //         perfume: buyNowProduct.productId || buyNowProduct.id,
+  //         quantity: buyNowProduct.quantity || 1,
+  //         address: orderData.shippingAddress,
+  //         payment_method: orderData.paymentMethod === "Cash on Delivery" ? "COD" : "ONLINE"
+  //       });
+  //     } else {
+  //       response = await api.post('/api/orders/create/', {
+  //         address: orderData.shippingAddress,
+  //         payment_method: orderData.paymentMethod === "Cash on Delivery" ? "COD" : "ONLINE"
+  //       });
+  //     }
+
+  //     await fetchOrders(); // Refresh orders
+  //     toast.success("Order placed successfully!");
+  //     return response; // Contains order_id
+  //   } catch (error) {
+  //     console.error("Error creating order:", error);
+  //     toast.error(error.response?.data?.error || "Failed to place order");
+  //     return null;
+  //   }
+  // };
 
   // 🔹 Get single order by ID (user-specific)
+  // const getOrderById = async (orderId) => {
+  //   // We can rely on local state or fetch from backend if available.
+  //   // Assuming history returns full details
+  //   const order = orders.find(order => String(order.id) === String(orderId));
+  //   return order || null;
+  // };
   const getOrderById = async (orderId) => {
-    // We can rely on local state or fetch from backend if available.
-    // Assuming history returns full details
-    const order = orders.find(order => String(order.id) === String(orderId));
-    return order || null;
-  };
+  // First try local state
+  const localOrder = orders.find(order => String(order.id) === String(orderId));
+  if (localOrder) return localOrder;
+
+  // Fallback: fetch from API if orders not loaded yet (e.g. page refresh)
+  try {
+    const response = await api.get('/api/orders/history/');
+    const allOrders = response || [];
+    setOrders(allOrders);
+    return allOrders.find(order => String(order.id) === String(orderId)) || null;
+  } catch (error) {
+    console.error("Error fetching order:", error);
+    return null;
+  }
+};
 
   // 🔹 Cancel order
   const cancelOrder = async (orderId) => {

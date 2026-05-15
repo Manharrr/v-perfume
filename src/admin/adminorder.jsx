@@ -86,19 +86,19 @@ export default function AdminOrders() {
         <div className="bg-neutral-900 border border-neutral-800 rounded-lg p-4">
           <p className="text-gray-400 text-sm">Pending</p>
           <p className="text-2xl font-bold">
-            {orders.filter(o => o.status === 'Pending').length}
+            {orders.filter(o => o.status?.toUpperCase() === 'PENDING').length}
           </p>
         </div>
         <div className="bg-neutral-900 border border-neutral-800 rounded-lg p-4">
           <p className="text-gray-400 text-sm">Shipped</p>
           <p className="text-2xl font-bold">
-            {orders.filter(o => o.status === 'Shipped').length}
+            {orders.filter(o => o.status?.toUpperCase() === 'SHIPPED').length}
           </p>
         </div>
         <div className="bg-neutral-900 border border-neutral-800 rounded-lg p-4">
           <p className="text-gray-400 text-sm">Delivered</p>
           <p className="text-2xl font-bold">
-            {orders.filter(o => o.status === 'Delivered').length}
+            {orders.filter(o => o.status?.toUpperCase() === 'DELIVERED').length}
           </p>
         </div>
       </div>
@@ -128,7 +128,7 @@ export default function AdminOrders() {
                 filteredOrders.map((order) => (
                   <tr key={order.id} className="border-b border-neutral-800 hover:bg-neutral-800/50">
                     <td className="p-4 font-mono text-sm">
-                      {order.orderId || `#${order.id?.slice(0, 8)}`}
+                      {order.orderId || `#${String(order.id).slice(0, 8)}`}
                     </td>
                     <td className="p-4">
                       <div>

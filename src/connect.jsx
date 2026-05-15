@@ -15,6 +15,8 @@ import Order from "./pages/order";
 import OrderDetails from "./pages/orderdetails";
 import NotFound from "./pages/notfound";
 
+import VerifyOTP from "./pages/verifyotp";
+
 import AdminLayout from "./admin/adminlayout";
 import AdminDashboard from "./admin/admindash";
 import AdminProducts from "./admin/adminproducts";
@@ -27,6 +29,9 @@ import UserDetails from "./admin/userdetails";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 import AdminRoute from "./routes/AdminRoute";
+
+import ForgotPassword from "./pages/forgotpassword";
+import ResetPassword from "./pages/resetpassword";
 
 export default function Connect() {
   return (
@@ -46,6 +51,11 @@ export default function Connect() {
       <Route path="/payment" element={<ProtectedRoute><Payment /></ProtectedRoute>} />
       <Route path="/order" element={<ProtectedRoute><Order /></ProtectedRoute>} />
       <Route path="/order/:id" element={<ProtectedRoute><OrderDetails /></ProtectedRoute>} />
+      {/* <Route path="/verify-email/:token" element={<VerifyEmail />}/> */}
+      <Route path="/verify-otp"element={<VerifyOTP />}/>
+
+      <Route path="/forgot-password"element={<ForgotPassword />}/>
+      <Route path="/reset-password" element={<ResetPassword />}/>
 
       
 

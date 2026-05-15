@@ -8,6 +8,21 @@ export const api = axios.create({
   },
 });
 
+// Helper to resolve image URLs
+export const getMediaUrl = (path) => {
+  if (!path) return "https://placehold.co/600x600?text=No+Image";
+  
+  if (path.includes('http')) {
+    let url = path.startsWith('http') ? path : path.substring(path.indexOf('http'));
+    // Fix single slash issues
+    if (url.includes('https:/') && !url.includes('https://')) url = url.replace('https:/', 'https://');
+    if (url.includes('http:/') && !url.includes('http://')) url = url.replace('http:/', 'http://');
+    return url;
+  }
+  
+  return `http://127.0.0.1:8000${path}`;
+};
+
 // Request interceptor to attach the JWT token
 api.interceptors.request.use(
   (config) => {

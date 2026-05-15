@@ -7,7 +7,7 @@ import { useCart } from "../context/cartcontext";
 import { useWishlist } from "../context/wishlistcontext";
 import { useAuth } from "../context/auth";
 import toast from "react-hot-toast";
-import { api } from "../utils/api";
+import { api, getMediaUrl } from "../utils/api";
 
 function Men() {
   const [products, setProducts] = useState([]);
@@ -22,20 +22,20 @@ function Men() {
     fetchMenProducts();
   }, []);
 
-  const fetchMenProducts = async () => {
-    try {
-      const data = await api.get("/api/products/perfumes/"); // Using axios
-      const mensProducts = data.filter(
-        (p) => (p.category?.name?.toLowerCase() || p.category) === "men" || (p.category?.name?.toLowerCase() || p.category) === "mens"
-      );
-      setProducts(mensProducts);
-    } catch (err) {
-      console.error("Error fetching men products:", err);
-      toast.error("Failed to load products");
-    } finally {
-      setLoading(false);
-    }
-  };
+const fetchMenProducts = async () => {
+  try {
+    const response = await api.get(
+      "/api/products/perfumes/?category=men"
+    );
+
+    setProducts(response);
+
+  } catch (err) {
+    console.error("Error fetching men products:", err);
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleAddToCart = async (product, e) => {
     e.stopPropagation();
@@ -101,15 +101,15 @@ function Men() {
 
                 {/* Product Image */}
                 <div className="w-full aspect-[4/3] overflow-hidden">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = "https://via.placeholder.com/300x400?text=Perfume";
-                    }}
-                  />
+                    <img
+                      src={getMediaUrl(product.image)}
+                      alt={product.name}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "https://placehold.co/300x400?text=Mens+Perfume";
+                      }}
+                    />
                 </div>
 
                 {/* Product Info */}

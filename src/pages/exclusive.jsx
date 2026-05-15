@@ -7,7 +7,7 @@ import { useCart } from "../context/cartcontext";
 import { useWishlist } from "../context/wishlistcontext";
 import { useAuth } from "../context/auth";
 import toast from "react-hot-toast";
-import { api } from "../utils/api";
+import { api, getMediaUrl } from "../utils/api";
 
 function Exclusive() {
   const [products, setProducts] = useState([]);
@@ -23,16 +23,33 @@ function Exclusive() {
   }, []);
 
   const fetchExclusiveProducts = async () => {
-    try {
-      const data = await api.get("/api/products/perfumes/"); // Using axios
-      setProducts(data.filter((p) => p.isExclusive === true));
-    } catch (err) {
-      console.error("Error fetching exclusive products:", err);
-      toast.error("Failed to load products");
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    const data = await api.get(
+      "/api/products/perfumes/?category=exclusive"
+    );
+
+    setProducts(data);
+
+  } catch (err) {
+    console.error("Error fetching exclusive products:", err);
+    toast.error("Failed to load products");
+  } finally {
+    setLoading(false);
+  }
+};
+
+  // const fetchExclusiveProducts = async () => {
+  //   try {
+  //     const data = await api.get("/api/products/perfumes/?category=exclusive"); // Using axios
+  //     // setProducts(data.filter((p) => p.isExclusive === true));
+  //     setProducts(response.data);
+  //   } catch (err) {
+  //     console.error("Error fetching exclusive products:", err);
+  //     toast.error("Failed to load products");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const handleAddToCart = async (product, e) => {
     e.stopPropagation();
@@ -127,12 +144,12 @@ function Exclusive() {
                   {/* Product Image */}
                   <div className="w-full aspect-[4/3] overflow-hidden bg-gray-100">
                     <img
-                      src={product.image}
+                      src={getMediaUrl(product.image)}
                       alt={product.name}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       onError={(e) => {
                         e.target.onerror = null;
-                        e.target.src = "https://via.placeholder.com/300x400?text=Exclusive+Perfume";
+                        e.target.src = "https://placehold.co/300x400?text=Exclusive+Perfume";
                       }}
                     />
                   </div>

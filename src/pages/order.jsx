@@ -101,7 +101,7 @@ function Order() {
                   <div>
                     <p className="text-sm text-gray-500">Order ID: {order.orderId}</p>
                     <p className="text-sm text-gray-500">
-                      Date: {new Date(order.orderDate || order.createdAt).toLocaleDateString('en-IN', {
+                      Date: {new Date(order.orderDate || order.created_at).toLocaleDateString('en-IN', {
                         day: 'numeric',
                         month: 'short',
                         year: 'numeric'
@@ -109,10 +109,21 @@ function Order() {
                     </p>
                   </div>
                   <div className="flex items-center gap-4 mt-2 md:mt-0">
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(order.status)}`}>
+                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(order.status)}`}>
                       {order.status}
                     </span>
-                    <span className="text-xl font-bold">₹{order.totalAmount}</span>
+                    {/* <span className="text-xl font-bold">₹{order.totalAmount}</span> */}
+                    <span className="text-xl font-bold">
+                     ₹{
+                       order.items?.reduce(
+                         (total, item) =>
+                          total +
+                         ((item.price || 0) * (item.quantity || 0)),
+                        0
+                     )
+                   }
+                 </span>
+                     
                   </div>
                 </div>
 
@@ -120,8 +131,8 @@ function Order() {
                   {order.items?.map((item, index) => (
                     <div key={index} className="flex items-center gap-4 mb-4 last:mb-0">
                       <img
-                        src={item.image}
-                        alt={item.name}
+                        src={item.perfume_image}
+                        alt={item.perfume_name}
                         className="w-16 h-16 object-cover rounded"
                         onError={(e) => {
                           e.target.onerror = null;
@@ -129,7 +140,7 @@ function Order() {
                         }}
                       />
                       <div className="flex-grow">
-                        <p className="font-medium">{item.name}</p>
+                        <p className="font-medium">{item.perfume_name}</p>
                         <p className="text-sm text-gray-600">{item.brand}</p>
                         <p className="text-sm">Quantity: {item.quantity}</p>
                         <p className="font-bold">₹{item.price * item.quantity}</p>

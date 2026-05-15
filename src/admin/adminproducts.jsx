@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import api from "../utils/api";
+import { api, getMediaUrl } from "../utils/api";
 
 export default function AdminProducts() {
   const [products, setProducts] = useState([]);
@@ -20,7 +20,7 @@ export default function AdminProducts() {
     price: "",
     stock: "10",
     description: "",
-    image: ""
+    image: null // Changed to null for file
   });
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export default function AdminProducts() {
     if (!window.confirm("Delete this product?")) return;
 
     try {
-      await api.patch(`/api/admin/products/${String(id)}/delete/`);
+      await api.delete(`/api/admin/products/${String(id)}/delete/`);
       setProducts(products.filter(p => String(p.id) !== String(id)));
       toast.success("Product deleted");
     } catch {
@@ -72,23 +72,29 @@ export default function AdminProducts() {
       return;
     }
 
-    const productData = {
-      name: formData.name,
-      brand: parseInt(formData.brand),
-      category: parseInt(formData.category),
-      description: formData.description,
-      image: formData.image,
-      price: parseFloat(formData.price),
-      stock: parseInt(formData.stock)
-    };
+    const data = new FormData();
+    data.append("name", formData.name);
+    data.append("brand", formData.brand);
+    data.append("category", formData.category);
+    data.append("price", formData.price);
+    data.append("stock", formData.stock);
+    data.append("description", formData.description);
+    
+    if (formData.image instanceof File) {
+      data.append("image", formData.image);
+    }
 
     try {
       if (editingProduct) {
-        const updated = await api.patch(`/api/admin/products/${String(editingProduct.id)}/edit/`, productData);
+        const updated = await api.patch(`/api/admin/products/${String(editingProduct.id)}/edit/`, data, {
+          headers: { "Content-Type": "multipart/form-data" }
+        });
         setProducts(products.map(p => String(p.id) === String(editingProduct.id) ? updated : p));
         toast.success("Product updated");
       } else {
-        const newProduct = await api.post("/api/admin/products/add/", productData);
+        const newProduct = await api.post("/api/admin/products/add/", data, {
+          headers: { "Content-Type": "multipart/form-data" }
+        });
         setProducts([...products, newProduct]);
         toast.success("Product added");
       }
@@ -105,11 +111,8 @@ export default function AdminProducts() {
     setFormData({
       name: "",
       brand: "",
-      category: "",
-      price: "",
-      stock: "10",
       description: "",
-      image: ""
+      image: null
     });
     setEditingProduct(null);
   };
@@ -178,10 +181,13 @@ export default function AdminProducts() {
                   <td className="p-4">
                     <div className="flex items-center gap-3">
                       <img
-                        src={product.image || "https://placehold.co/48x48/1e1e1e/ffffff?text=No+Image"}
+                        src={getMediaUrl(product.image)}
                         alt={product.name}
                         className="w-12 h-12 rounded-lg object-cover border border-neutral-700"
-                        onError={(e) => e.target.src = "https://placehold.co/48x48/1e1e1e/ffffff?text=No+Image"}
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = "https://placehold.co/48x48/1e1e1e/ffffff?text=No+Image";
+                        }}
                       />
                       <div className="max-w-xs">
                         <p className="font-medium text-white truncate">{product.name}</p>
@@ -306,11 +312,11 @@ export default function AdminProducts() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm text-gray-400">Image URL</label>
+                  <label className="text-sm text-gray-400">Product Image *</label>
                   <input
-                    placeholder="https://..."
-                    value={formData.image}
-                    onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setFormData({ ...formData, image: e.target.files[0] })}
                     className="w-full bg-neutral-800 border border-neutral-700 px-4 py-2 rounded-lg text-white focus:border-white outline-none transition-colors"
                   />
                 </div>
@@ -330,7 +336,7 @@ export default function AdminProducts() {
               {formData.image && (
                 <div className="flex justify-center bg-neutral-800 p-4 rounded-lg">
                   <img 
-                    src={formData.image} 
+                    src={typeof formData.image === 'string' ? formData.image : URL.createObjectURL(formData.image)} 
                     className="h-32 rounded-lg shadow-lg object-contain"
                     onError={(e) => e.target.src = "https://placehold.co/400x200/1e1e1e/ffffff?text=Preview+Unavailable"}
                   />

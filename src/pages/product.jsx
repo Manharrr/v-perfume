@@ -7,7 +7,7 @@ import { useCart } from "../context/cartcontext";
 import { useWishlist } from "../context/wishlistcontext";
 import { useAuth } from "../context/auth";
 import toast from "react-hot-toast";
-import api from "../utils/api";
+import api, { getMediaUrl } from "../utils/api";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -181,7 +181,7 @@ export default function Products() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {filteredProducts.map((product) => (
               <div
-                key={product?.id || Math.random()}
+                key={product?.id || `product-${product?.name}`}
                 onClick={() => product?.id && navigate(`/product/${product.id}`)}
                 className="border rounded-lg overflow-hidden cursor-pointer hover:shadow-lg relative"
               >
@@ -197,12 +197,12 @@ export default function Products() {
                 </button>
 
                 <img
-                  src={product?.image || "https://via.placeholder.com/300x300?text=No+Image"}
+                  src={getMediaUrl(product?.image)}
                   alt={product?.name || "Product"}
                   className="h-48 w-full object-cover"
                   onError={(e) => {
                     e.target.onerror = null;
-                    e.target.src = "https://via.placeholder.com/300x300?text=No+Image";
+                    e.target.src = "https://placehold.co/300x300?text=No+Image";
                   }}
                 />
 

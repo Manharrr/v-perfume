@@ -40,7 +40,7 @@ function Login() {
 
     try {
       const user = await authService.login(formData.email, formData.password);
-      
+
       // The context's login function updates the global state
       login(user);
 
@@ -87,7 +87,7 @@ function Login() {
                 />
               </div>
 
-              <div>
+              {/* <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
                 <input
                   type="password"
@@ -98,14 +98,40 @@ function Login() {
                   onChange={handleChange}
                   required
                 />
+              </div> */}
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Password
+                </label>
+
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black outline-none text-black"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+
+                <div className="flex justify-end mt-2">
+
+                  <Link
+                    to="/forgot-password"
+                    className="text-sm text-gray-600 hover:text-black"
+                  >
+                    Forgot Password?
+                  </Link>
+
+                </div>
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full py-3.5 rounded-lg font-bold ${
-                  loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-black text-white hover:bg-gray-800'
-                }`}
+                className={`w-full py-3.5 rounded-lg font-bold ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-black text-white hover:bg-gray-800'
+                  }`}
               >
                 {loading ? "Signing In..." : 'Sign In'}
               </button>

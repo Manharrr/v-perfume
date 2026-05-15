@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import api from "../utils/api";
+import { api, getMediaUrl } from "../utils/api";
 import { 
   ArrowLeftIcon, 
   PencilSquareIcon, 
@@ -70,9 +70,13 @@ export default function AdminProductDetails() {
           {/* Image Section */}
           <div className="bg-neutral-800 aspect-square">
             <img
-              src={product.image || "https://images.unsplash.com/photo-1541643600914-78b084683601?w=800"}
+              src={getMediaUrl(product.image)}
               alt={product.name}
               className="w-full h-full object-cover"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = "https://placehold.co/800x800?text=No+Image";
+              }}
             />
           </div>
 
